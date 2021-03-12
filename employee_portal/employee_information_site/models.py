@@ -3,6 +3,8 @@ from django.db import models
 
 
 # Create your models here.
+
+
 class CompanyDepartment(models.Model):
     name = models.CharField(max_length=50)
 
@@ -21,7 +23,7 @@ class EmployeePosition(models.Model):
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
+    photo = models.ImageField(upload_to='employee_photos')
     email = models.EmailField()
     phone_number = models.CharField(max_length=11)
     department = models.ForeignKey(CompanyDepartment, null=True, on_delete=models.SET_NULL)
