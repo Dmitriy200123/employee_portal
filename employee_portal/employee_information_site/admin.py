@@ -1,16 +1,16 @@
 from django.contrib import admin
-from .models import Candidate, CompanyDepartment, EmployeePosition, Employee
+from .models import CompanyDepartment, EmployeePosition, Employee
+
 
 # Register your models here.
 
 
-class CandidateList(admin.ModelAdmin):
-    list_display = ('fullName', 'entryDate', 'position')
-    list_filter = ['entryDate', 'position']
-    search_fields = ['fullName']
+class EmployeeList(admin.ModelAdmin):
+    list_display = ('full_name', 'created_at', 'position')
+    list_filter = ['created_at', 'position']
+    search_fields = ['full_name']
 
 
-admin.site.register(Candidate, CandidateList)
 admin.site.register(CompanyDepartment)
 admin.site.register(EmployeePosition)
-admin.site.register(Employee)
+admin.site.register(Employee, EmployeeList)

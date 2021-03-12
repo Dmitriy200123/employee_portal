@@ -20,14 +20,14 @@ class EmployeePosition(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    full_name = models.CharField(max_length=50)
+    full_name = models.CharField(max_length=50, verbose_name='Full Name')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/')
     email = models.EmailField()
     phone_number = models.CharField(max_length=11)
     department = models.ForeignKey(CompanyDepartment, null=True, on_delete=models.SET_NULL)
-    position = models.ForeignKey(EmployeePosition, null=True, on_delete=models.SET_NULL)
+    position = models.ForeignKey(EmployeePosition, null=True, on_delete=models.SET_NULL, verbose_name='Position')
     is_new_employee = models.BooleanField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Entry Date')
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
