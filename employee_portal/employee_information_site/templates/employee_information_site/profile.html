@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid justify-content-start">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                       href="{% url 'employee_information_site:home_page' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                       href="{% url 'authentication:logout' %}">Выйти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'employee_information_site:profile' %}">Профиль</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<h1>My profile</h1>
+<img src="{{ employee.photo }}" width="80" height="80" alt="avatar">
+<p>
+    <label for="id_full_name">Full name:</label>
+    <input type="text" readonly="" name="full_name" maxlength="50" id="id_full_name" value="{{ employee.full_name }}">
+</p>
+<p>
+    <label for="id_email">Email:</label>
+    <input type="text" readonly="" name="email" id="id_email" value="{{ employee.email }}">
+</p>
+<p>
+    <label for="id_phone_number">Phone number:</label>
+    <input type="text" readonly="" name="phone_number" id="id_phone_number" value="{{ employee.phone_number }}">
+</p>
+<p>
+    <label for="id_department">Department:</label>
+    <input type="text" readonly="" name="department" id="id_department" value="{{ employee.department }}">
+</p>
+<p>
+    <label for="id_position">Position:</label>
+    <input type="text" readonly="" name="position" id="id_position" value="{{ employee.position }}">
+</p>
+<p>
+    <label for="id_is_new_employee">Is new employee:</label>
+    <input type="checkbox" onclick="return false;" readonly name="is_new_employee" id="id_is_new_employee"
+            {% if employee.is_new_employee %}
+           checked
+            {% endif %}
+    >
+</p>
+<form action="{% url 'employee_information_site:profile_edit' %}">
+    <button type="submit" class="btn btn-success">Edit</button>
+</form>
+
+
+<!-- Option 1: Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+</body>
+</html>

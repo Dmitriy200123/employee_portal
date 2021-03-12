@@ -1,7 +1,7 @@
 from django.contrib import admin
+from .models import Candidate, CompanyDepartment, EmployeePosition, Employee
 
 # Register your models here.
-from .models import Candidate
 
 
 class CandidateList(admin.ModelAdmin):
@@ -11,3 +11,6 @@ class CandidateList(admin.ModelAdmin):
 
 
 admin.site.register(Candidate, CandidateList)
+admin.site.register(CompanyDepartment)
+admin.site.register(EmployeePosition)
+admin.site.register(Employee)
