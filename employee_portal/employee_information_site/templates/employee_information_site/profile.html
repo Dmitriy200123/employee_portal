@@ -57,6 +57,10 @@
     <input type="text" readonly="" name="position" id="id_position" value="{{ employee.position }}">
 </p>
 <p>
+    <label for="id_description">Description:</label>
+    <textarea name="description" cols="40" rows="5" id="id_description">{{ employee.description }}</textarea>
+</p>
+<p>
     <label for="id_is_new_employee">Is new employee:</label>
     <input type="checkbox" onclick="return false;" readonly name="is_new_employee" id="id_is_new_employee"
             {% if employee.is_new_employee %}
