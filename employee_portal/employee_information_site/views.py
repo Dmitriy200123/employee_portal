@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django import forms
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .forms import ProfileForm
 from .models import Employee
@@ -16,8 +17,10 @@ class ProfilePageView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         employee = Employee.objects.filter(user=request.user.id)
+
         if not employee:
             return redirect('employee_information_site:profile_edit')
+
         context = {'employee': employee.first()}
         return render(request, self.template_name, context)
 
@@ -27,23 +30,33 @@ class ProfileEditPageView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         employee = Employee.objects.filter(user=request.user.id)
+
         if employee:
             form = ProfileForm(instance=employee.first())
+            form.fields['is_new_employee'].widget = forms.HiddenInput()
         else:
             form = ProfileForm()
+
         context = {'form': form}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         employee = Employee.objects.filter(user=request.user.id)
+
         if employee:
-            form = ProfileForm(request.POST, request.FILES, initial={'user': request.user.id},
-                               instance=employee.first())
+            form = ProfileForm(request.POST, request.FILES, instance=employee.first())
         else:
             form = ProfileForm(request.POST, request.FILES, initial={'user': request.user.id})
-        form.fields['user'].disabled = True
+
+        self.__disableFields(form)
+
         if form.is_valid():
             form.save()
             return redirect('employee_information_site:profile')
 
         return render(request, self.template_name, {'form': form})
+
+    @staticmethod
+    def __disableFields(form: ProfileForm):
+        form.fields['user'].disabled = True
+        form.fields['is_new_employee'].disabled = True
