@@ -41,3 +41,24 @@ class Employee(PersonBase):
 
     def __str__(self):
         return self.full_name
+
+
+class CandidateProspectivePosition(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Perspective position')
+
+    def __str__(self):
+        return self.name
+
+
+class Candidate(PersonBase):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    position = models.ForeignKey(CandidateProspectivePosition, null=True, on_delete=models.SET_NULL)
+    personal_qualities = models.TextField(blank=True)
+    professional_skill = models.TextField(blank=True)
+    professional_achievements = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['created_at', 'position', 'full_name']
+
+    def __str__(self):
+        return self.full_name
