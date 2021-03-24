@@ -1,0 +1,46 @@
+{% load url_replace %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee information</title>
+</head>
+<body>
+<header>
+    <p><a href="{% url 'employee_information_site:home_page' %}">На главную</a></p>
+    <form method="get">
+        <p>
+            <label for="id_full_name">Search:</label>
+            <input type="text" name="full_name" maxlength="50" id="id_full_name">
+            {{ form.as_p }}
+            <input type="submit"/>
+        </p>
+    </form>
+</header>
+<h1>Employees information</h1>
+{% for employee in page_obj %}
+    <p>
+        <a href="{% url 'employeeInformation' %}?user={{ employee.user.id }}">{{ employee.full_name }}. {{ employee.position }}.</a>
+    </p>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?{% url_replace page=1 %}">&laquo; First</a>
+            <a href="?{% url_replace page=page_obj.previous_page_number %}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?{% url_replace page=page_obj.next_page_number %}">Next</a>
+            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">Last &raquo;</a>
+        {% endif %}
+
+    </span>
+</div>
+</body>
+</html>
