@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Информация</title>
+    <title>Информация о сотруднике</title>
 </head>
 <body>
 {% if employee %}
     <header>
     <p><a href="{% url 'employeesListInformation' %}">Назад</a></p>
     </header>
-    <h1>Profile {{ employee.full_name }}</h1>
+    <h1>Профиль {{ employee.full_name }}</h1>
     <div class="media">
         <img src="{{ employee.photo.url }}" width="80" height="80" alt="avatar">
     </div>
