@@ -8,6 +8,9 @@ from django.db import models
 class CompanyDepartment(models.Model):
     name = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -15,6 +18,9 @@ class CompanyDepartment(models.Model):
 class EmployeePosition(models.Model):
     name = models.CharField(max_length=50)
     department = models.ForeignKey(CompanyDepartment, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return f'{self.department.name}: {self.name}'
@@ -38,6 +44,9 @@ class Employee(PersonBase):
     department = models.ForeignKey(CompanyDepartment, null=True, on_delete=models.SET_NULL)
     position = models.ForeignKey(EmployeePosition, null=True, on_delete=models.SET_NULL)
     is_new_employee = models.BooleanField()
+
+    class Meta:
+        ordering = ['department', 'position', 'full_name']
 
     def __str__(self):
         return self.full_name
