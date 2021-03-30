@@ -21,7 +21,7 @@ class ChatBot:
         response = await self.AsyncClient.chat_postMessage(channel=channel_id, text=message)
         return response
 
-    def post_schdeuled_message(self, date, message='Hello world', channel_id='#random', ):
+    def post_scheduled_message(self, date, message='Hello world', channel_id='#random', ):
         '''
         Adding message to scheduler query
         :param date: date in format "2021-03-27 15:38:50"
