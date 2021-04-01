@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
@@ -14,17 +14,17 @@
         <ul class="nav">
             <div class="nav_img">
                 <li class="nav-item_active">
-                <a class="nav-link_active" href="https://www.skblab.ru/">
-                    <img src="{% static 'images/skb-lab.png' %}" width="149" height="42" alt="СКБ-Лаб"> </a>
-            </li>
+                    <a class="nav-link_active" href="https://www.skblab.ru/">
+                        <img src="{% static 'images/skb-lab.png' %}" width="149" height="42" alt="СКБ-Лаб"> </a>
+                </li>
             </div>
             <div class="nav_button">
                 <li class="nav-item">
-                <a class="nav-link" href="{% url 'authentication:login' %}">Вход</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="{% url 'authentication:register' %}">Регистрация</a>
-            </li>
+                    <a class="nav-link" href="{% url 'authentication:login' %}">Вход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'authentication:register' %}">Регистрация</a>
+                </li>
             </div>
         </ul>
     </div>
@@ -32,15 +32,17 @@
 
 <main class="grid_container">
     <div class="register_form">
+        <h1>Регистрация сотрудника</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Sign up</button>
+            <button type="submit">Зарегистрироваться</button>
         </form>
+        <p class="link"> Уже есть аккаунт? <a class="orange" href="{% url 'authentication:login' %}">Войти</a></p>
     </div>
 
     <div class="image">
-        <img src="{% static 'images/register_image.png' %}" width="538" height="506">
+        <img src="{% static 'images/register_image.png' %}" width="80%" height="auto">
     </div>
 </main>
 </body>

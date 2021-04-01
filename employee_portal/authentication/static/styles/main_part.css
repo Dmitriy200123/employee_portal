@@ -3,15 +3,51 @@
     grid-template-columns: 40% 60%;
     grid-template-rows: 1fr;
     justify-content: space-between;
-}
-
-.register_form {
-    grid-column: 1/2;
-    grid-row: auto;
+    column-gap: 5%;
 }
 
 .image {
+    justify-self: center;
+    align-self: center;
     grid-column: 2/3;
     grid-row: auto;
+    margin-top: 10%;
+    margin-left: 10%;
+}
+
+button {
+    background-color: #28A228;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    align-items: center;
+    text-align: center;
+}
+
+a.orange {
+    color: #FB5D22;
+    text-decoration: none;
+}
+
+h1 {
+    height: auto;
+    font-size: 50px;
+}
+
+label, .link {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+.link {
     text-align: center;
 }
