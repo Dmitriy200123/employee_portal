@@ -4,17 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
 </head>
 <body>
 <main class="grid_container">
-<div class="login_form">
-    <form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Зарегистрироваться</button>
+    <div class="login_form">
+        <h1>Регистрация на портале</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Зарегистрироваться</button>
         </form>
-</div>
+        <p> Уже есть аккаунт? <a class="orange" href="{% url 'authentication:login' %}">Войти</a></p>
+    </div>
 </main>
 </body>
 </html>
