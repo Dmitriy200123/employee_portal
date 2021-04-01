@@ -25,5 +25,13 @@ class RegisterView(generic.CreateView):
 
 
 class EmployeeLoginView(LoginView):
+    success_url = reverse_lazy('employee_information_site:profile')
     form_class = LoginForm
     template_name = 'registration/login.html'
+
+    def form_valid(self, form):
+        username = self.request.POST['username']
+        password = self.request.POST['password']
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return redirect(self.success_url)
