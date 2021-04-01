@@ -23,10 +23,10 @@ class RegisterForm(UserCreationForm):
     password1 = forms.CharField(
         label=_("Пароль"),
         strip=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'password1'}),
     )
     password2 = forms.CharField(
         label=_("Подтверждение пароля"),
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password', 'class': 'password2'}),
         strip=False,
     )

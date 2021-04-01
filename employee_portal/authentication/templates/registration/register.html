@@ -3,8 +3,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="{% static 'styles/header_part.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/main_part.css' %}">
@@ -16,17 +14,17 @@
         <ul class="nav">
             <div class="nav_img">
                 <li class="nav-item_active">
-                    <a class="nav-link_active" href="https://www.skblab.ru/">
-                        <img src="{% static 'images/skb-lab.png' %}" width="149" height="42" alt="СКБ-Лаб"> </a>
-                </li>
+                <a class="nav-link_active" href="https://www.skblab.ru/">
+                    <img src="{% static 'images/skb-lab.png' %}" width="149" height="42" alt="СКБ-Лаб"> </a>
+            </li>
             </div>
             <div class="nav_button">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authentication:login' %}">Вход</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'authentication:register' %}">Регистрация</a>
-                </li>
+                <a class="nav-link" href="{% url 'authentication:login' %}">Вход</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{% url 'authentication:register' %}">Регистрация</a>
+            </li>
             </div>
         </ul>
     </div>
