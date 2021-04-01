@@ -1,14 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Регистрация</title>
-    <link rel="stylesheet" type="text/css" href='{% static 'styles/register.css' %}'>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
 </head>
-<body>
 <header>
     <div class="header_navbar_menu" id="navbarNav">
         <ul class="nav">
@@ -32,13 +29,15 @@
 
 <main class="grid_container">
     <div class="register_form">
+        <h1>Регистрация на портале</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Sign up</button>
+            <button type="submit">Зарегистрироваться</button>
         </form>
+        <p> Уже есть аккаунт? <a class="orange" href="{% url 'authentication:login' %}">Войти</a></p>
     </div>
-
+  
     <div class="image">
         <img src="{% static 'images/register_image.png' %}" width="538" height="506">
     </div>

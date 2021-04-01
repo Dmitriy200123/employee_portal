@@ -1,14 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
 </head>
 <body>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
+<main class="grid_container">
+    <div class="login_form">
+        <h1>Вход в кабинет <br>
+            сотрудника</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Войти</button>
+        </form>
+        <p> Нет аккаунта? <a class="orange" href="{% url 'authentication:register' %}">Зарегистрироваться</a></p>
+    </div>
+</main>
 </body>
 </html>
