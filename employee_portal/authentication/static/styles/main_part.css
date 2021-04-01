@@ -1,19 +1,17 @@
-.grid_container{
+.grid_container {
     display: grid;
     grid-template-columns: 40% 60%;
     grid-template-rows: 1fr;
     justify-content: space-between;
 }
 
-.register_form{
+.register_form {
     grid-column: 1/2;
     grid-row: auto;
 }
 
-.image{
+.image {
     grid-column: 2/3;
     grid-row: auto;
+    text-align: center;
 }
-
-
-
