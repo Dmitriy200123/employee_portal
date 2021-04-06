@@ -35,6 +35,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'employeesListInformation' %}">Сотрудники</a>
                     </li>
+                    {% if user.is_staff %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href="{% url 'chatBots:chatBotsSetting' %}">Настройка
+                                чат-ботов</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
