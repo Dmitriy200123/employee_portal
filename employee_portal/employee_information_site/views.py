@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .forms import ProfileForm
-from .models import Employee
+from .models import Employee, Service
 
 
 # Create your views here.
@@ -23,6 +23,17 @@ class ProfilePageView(TemplateView):
 
         context = {'employee': employee.first()}
         return render(request, self.template_name, context)
+
+
+class ServiceListView(TemplateView):
+    template_name = 'employee_information_site/service_list.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {'list': Service.objects.all()}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'text': 'Ok'})
 
 
 class ProfileEditPageView(TemplateView):
