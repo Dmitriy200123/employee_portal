@@ -11,9 +11,9 @@
 <form method="post">
     {% csrf_token %}
     <ul>
-        {% for item in list %}
+        {% for object in object_list %}
         <li>
-            {{item}}
+            {{object.name}}
             <input type="checkbox" name="serviceCheck">
         </li>
         {%endfor%}
