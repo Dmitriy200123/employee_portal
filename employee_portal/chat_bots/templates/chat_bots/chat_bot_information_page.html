@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Информация о чат-боте</title>
+</head>
+<body>
+<header>
+    <p><a href="{% url 'chatBots:chatBotsSetting' %}">Назад</a></p>
+</header>
+{% if chatBot %}
+    <p>
+        <label for="id_name">Имя бота:</label>
+        <input type="text" readonly="" name="botName" id="id_name" value="{{ chatBot.name }}">
+    </p>
+    <p>
+        <label for="id_bot_type">Тип бота:</label>
+        <input type="text" readonly="" name="botType" id="id_bot_type" value="{{ chatBot.botType }}">
+    </p>
+    <p>
+        <label for="id_bot_type">Токен:</label>
+        <input type="text" readonly="" name="token" id="id_bot_type" value="{{ chatBot.token }}">
+    </p>
+
+{% else %}
+    <h1>Не найдено</h1>
+{% endif %}
+</body>
+</html>

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
     'employee_information_site.apps.EmployeeInformationSiteConfig',
     'view_employee_information.apps.ViewEmployeeInformationConfig',
+    'chat_bots.apps.ChatBotsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

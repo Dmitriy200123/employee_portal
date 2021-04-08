@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройка чат-ботов</title>
+</head>
+<body>
+<header>
+    <p><a href="{% url 'employee_information_site:home_page' %}">На главную</a></p>
+    <p><a href="{% url 'chatBots:addChatBots' %}">Добавить чат-бота</a></p>
+</header>
+<h1>Настройка чат-ботов</h1>
+
+{% if object_list %}
+    {% for chatBot in object_list %}
+        <p>
+            <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}">{{ chatBot.botType }}: {{ chatBot.name }}</a>
+        </p>
+    {% endfor %}
+{% else %}
+    <p>Добавьте чат-бота</p>
+{% endif %}
+
+</body>
+</html>

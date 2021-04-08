@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить чат-бота</title>
+</head>
+<body>
+<header>
+    <p><a href="{% url 'chatBots:chatBotsSetting' %}">Назад</a></p>
+</header>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Сохранить">
+</form>
+
+{% if chatBot %}
+    <form method="post" action="{% url 'chatBots:deleteChatBot' %}">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ chatBot.id }}">
+        <input type="submit" value="Удалить">
+    </form>
+{% endif %}
+</body>
+</html>
