@@ -2,9 +2,9 @@ from telegram import Bot
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-class ChatBot:
-    def __init__(self):
-        self.bot = Bot('Token_here')
+class TelegramBot:
+    def __init__(self, token):
+        self.bot = Bot(token)
         self.scheduler = BackgroundScheduler()
         self.scheduler.start()
         self.scheduler.pause()

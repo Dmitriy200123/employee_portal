@@ -2,10 +2,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from slack import WebClient, AsyncWebClient
 
 
-class ChatBot:
+class SlackBot:
 
-    def __init__(self):
-        self.client = WebClient('Token_here')
+    def __init__(self, token):
+        self.client = WebClient(token)
         self.scheduler = BackgroundScheduler()
         self.scheduler.start()
         self.scheduler.pause()
