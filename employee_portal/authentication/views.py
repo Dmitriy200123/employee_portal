@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views import generic
 from .forms import LoginForm, RegisterForm
+from employee_information_site.models import Employee
 
 
 # Create your views here.
@@ -25,7 +26,8 @@ class RegisterView(generic.CreateView):
 
 
 class EmployeeLoginView(LoginView):
-    success_url = reverse_lazy('employee_information_site:profile')
+    profile_url = reverse_lazy('employee_information_site:profile')
+    employee_questionnaire = reverse_lazy('employee_information_site:employee_questionnaire')
     form_class = LoginForm
     template_name = 'registration/login.html'
 
@@ -34,4 +36,7 @@ class EmployeeLoginView(LoginView):
         password = self.request.POST['password']
         user = authenticate(username=username, password=password)
         login(self.request, user)
-        return redirect(self.success_url)
+        employee = Employee.objects.filter(user=self.request.user.id).first()
+        if employee is None:
+            return redirect(self.employee_questionnaire)
+        return redirect(self.profile_url)
