@@ -12,7 +12,7 @@ from .forms import LoginForm, RegisterForm
 class RegisterView(generic.CreateView):
     form_class = RegisterForm
     template_name = 'registration/register.html'
-    success_url = reverse_lazy('employee_information_site:profile')
+    success_url = reverse_lazy('employee_information_site:employee_questionnaire')
 
     # auto authentication and redirect to profile
     def form_valid(self, form):

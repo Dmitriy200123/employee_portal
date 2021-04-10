@@ -68,3 +68,22 @@ class ProfileEditPageView(TemplateView):
     def __disableFields(form: ProfileForm):
         form.fields['user'].disabled = True
         form.fields['is_new_employee'].disabled = True
+
+class EmployeeQuestionnaire(TemplateView):
+    template_name = "employee_information_site\employee_questionnaire.html"
+
+    def get(self, request, *args, **kwargs):
+        form = ProfileForm(initial={'user': request.user.id})
+        context = {'form': form}
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        employee = Employee.objects.filter(user=request.user.id)
+        form = ProfileForm(request.POST, request.FILES, initial={'user': request.user.id})
+
+        if form.is_valid():
+            form.save()
+            return redirect('employee_information_site:profile')
+
+        return render(request, self.template_name, {'form': form})
+
