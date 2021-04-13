@@ -1,8 +1,11 @@
-from chat_bots.forms import ChatBotForm
-from chat_bots.models import ChatBot
-from django.shortcuts import get_object_or_404
+from chat_bots.forms import ChatBotForm, SenderForm
+from chat_bots.models import ChatBot, Sender
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from slack_bot.bot import SlackBot
+from telegram.error import InvalidToken
+from telegram_bot.bot import TelegramBot
 
 
 # Create your views here.
@@ -19,15 +22,24 @@ class AddChatBotPage(CreateView):
     success_url = reverse_lazy('chatBots:chatBotsSetting')
 
     def form_valid(self, form):
-        if self.is_valid_token(form.cleaned_data['token']):
+        if self.is_valid_token(form.cleaned_data['token'], form.cleaned_data['botType']):
             return super().form_valid(form)
 
         form.add_error('token', 'Недействительный токен')
         return super().form_invalid(form)
 
     @staticmethod
-    def is_valid_token(token: str):
-        # ToDO: Make token validation
+    def is_valid_token(token: str, bot_type):
+        # ToDO: Make slack bot token validation
+        if bot_type.messenger_type == 'Telegram':
+            try:
+                bot = TelegramBot(token)
+            except InvalidToken:
+                return False
+
+        else:
+            bot = SlackBot(token)
+
         return True
 
 
@@ -46,7 +58,7 @@ class UpdateChatBotPage(UpdateView):
         return get_object_or_404(self.model, id=id_value)
 
     def form_valid(self, form):
-        if AddChatBotPage.is_valid_token(form.cleaned_data['token']):
+        if AddChatBotPage.is_valid_token(form.cleaned_data['token'], form.cleaned_data['botType']):
             return super().form_valid(form)
 
         form.add_error('token', 'Недействительный токен')
@@ -64,3 +76,28 @@ class DeleteChatBotPage(DeleteView):
         id_value = parameters[self.argument] if self.argument in parameters and parameters[
             self.argument].isdigit() else None
         return get_object_or_404(self.model, id=id_value)
+
+
+class SenderSettingPage(ListView):
+    model = Sender
+    context_object_name = 'sender'
+    template_name = 'chat_bots/sender_setting_page.html'
+
+    def get_queryset(self):
+        return super().get_queryset().first()
+
+    def get(self, request, *args, **kwargs):
+        if self.model.objects.all():
+            return super().get(request, *args, **kwargs)
+
+        return redirect('chatBots:updateSender')
+
+
+class UpdateOrCreateSenderPage(UpdateView):
+    model = Sender
+    form_class = SenderForm
+    template_name = 'chat_bots/sender_update_or_create_page.html'
+    success_url = reverse_lazy('chatBots:senderSetting')
+
+    def get_object(self, **kwargs):
+        return self.model.objects.first()

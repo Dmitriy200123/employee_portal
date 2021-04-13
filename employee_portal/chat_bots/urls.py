@@ -9,4 +9,6 @@ urlpatterns = [
     path('add_chatbot/', staff_member_required(views.AddChatBotPage.as_view()), name='addChatBots'),
     path('update_chatbot/', staff_member_required(views.UpdateChatBotPage.as_view()), name='updateChatBot'),
     path('delete_chatbot/', staff_member_required(views.DeleteChatBotPage.as_view()), name='deleteChatBot'),
+    path('sender_setting/', staff_member_required(views.SenderSettingPage.as_view()), name='senderSetting'),
+    path('sender_update/', staff_member_required(views.UpdateOrCreateSenderPage.as_view()), name='updateSender'),
 ]
