@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from slack import WebClient, AsyncWebClient
+from slack import WebClient
 
 
 class SlackBot:
