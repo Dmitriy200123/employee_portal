@@ -1,8 +1,8 @@
-from chat_bots.forms import ChatBotForm
-from chat_bots.models import ChatBot
-from django.shortcuts import get_object_or_404
+from chat_bots.forms import ChatBotForm, SendMessageForm
+from chat_bots.models import ChatBot, MessageToSend
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 
 
 # Create your views here.
@@ -64,3 +64,14 @@ class DeleteChatBotPage(DeleteView):
         id_value = parameters[self.argument] if self.argument in parameters and parameters[
             self.argument].isdigit() else None
         return get_object_or_404(self.model, id=id_value)
+
+
+class SendMessageView(FormView):
+    template_name = 'chat_bots/send_message.html'
+    form_class = SendMessageForm
+    success_url = reverse_lazy('chatBots:chatBotsSetting')
+    model = MessageToSend
+
+    def form_valid(self, form):
+        form.send_message()
+        return super().form_valid(form)
