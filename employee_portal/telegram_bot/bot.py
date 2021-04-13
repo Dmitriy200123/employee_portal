@@ -9,16 +9,16 @@ class TelegramBot:
         self.scheduler.start()
         self.scheduler.pause()
 
-    def post_message(self, chat_id=388535300, message='Hello world!'):
+    def post_message(self, channel_id=388535300, message='Hello world!'):
         if len(self.scheduler.get_jobs()) == 0:
             self.scheduler.pause()
-        return self.bot.send_message(chat_id=chat_id, text=message)
+        return self.bot.send_message(chat_id=channel_id, text=message)
 
-    def post_scheduled_message(self, date, chat_id=388535300, message='Hello world'):
+    def post_scheduled_message(self, date, channel_id=388535300, message='Hello world'):
         '''
         Adding message to scheduler query
         :param date: date in format "2021-03-27 15:38:50"
         '''
         if len(self.scheduler.get_jobs()) == 0:
             self.scheduler.resume()
-        self.scheduler.add_job(self.post_message, 'date', run_date=date, args=[chat_id, message])
+        self.scheduler.add_job(self.post_message, 'date', run_date=date, args=[channel_id, message])
