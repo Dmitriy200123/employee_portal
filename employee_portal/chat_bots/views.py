@@ -1,6 +1,6 @@
 from chat_bots.forms import ChatBotForm, SenderForm
 from chat_bots.models import ChatBot, Sender
-from chat_bots.sender_bots import MessengerType
+from chat_bots.sender_bots import MessengerType, SenderBots
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -105,3 +105,7 @@ class UpdateOrCreateSenderPage(UpdateView):
 
     def get_object(self, **kwargs):
         return self.model.objects.first()
+
+    def form_valid(self, form):
+        SenderBots.updateBots()
+        return super().form_valid(form)

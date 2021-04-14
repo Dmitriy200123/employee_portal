@@ -5,38 +5,34 @@ from slack_bot.bot import SlackBot
 from telegram_bot.bot import TelegramBot
 
 
-class ChatBotType(enum.Enum):
-    NewEmployeeBot = 1
-    AccessRequestBot = 2
-
-
 class MessengerType(enum.Enum):
     Telegram = 'Telegram'
     Slack = 'Slack'
 
 
-def createAccessRequestBot(chat_bot):
-    if chat_bot.botType.messenger_type == MessengerType.Telegram.name:
-        return TelegramBot(chat_bot.token)
-
-    if chat_bot.botType.messenger_type == MessengerType.Slack.name:
-        return SlackBot(chat_bot.token)
-
-
-def createNewEmployeeBot(chat_bot):
-    if chat_bot.botType.messenger_type == MessengerType.Telegram.name:
-        return TelegramBot(chat_bot.token)
-
-    if chat_bot.botType.messenger_type == MessengerType.Slack.name:
-        return SlackBot(chat_bot.token)
-
-
 class SenderBots:
-    sender = Sender.objects.first()
-    new_employee_channel_id = sender.newEmployeeChannelId
-    new_employee_chat_bot = createNewEmployeeBot(sender.newEmployeeChatBot)
-    access_request_channel_id = sender.accessRequestChannelId
-    access_request_chat_bot = createAccessRequestBot(sender.accessRequestChatBot)
+    new_employee_channel_id = None
+    new_employee_chat_bot = None
+    access_request_channel_id = None
+    access_request_chat_bot = None
+
+    @staticmethod
+    def updateBots():
+        sender = Sender.objects.first()
+        employee_chat_bot = sender.newEmployeeChatBot
+        access_chat_bot = sender.accessRequestChatBot
+        SenderBots.new_employee_channel_id = sender.newEmployeeChannelId
+        SenderBots.access_request_channel_id = sender.accessRequestChannelId
+        SenderBots.new_employee_chat_bot = SenderBots.createBot(employee_chat_bot)
+        SenderBots.access_request_chat_bot = SenderBots.createBot(access_chat_bot)
+
+    @staticmethod
+    def createBot(chat_bot):
+        if chat_bot.botType.messenger_type == MessengerType.Telegram.name:
+            return TelegramBot(chat_bot.token)
+
+        if chat_bot.botType.messenger_type == MessengerType.Slack.name:
+            return SlackBot(chat_bot.token)
 
     @staticmethod
     def sendNewEmployeeMessage(data):
@@ -49,16 +45,6 @@ class SenderBots:
         message = f'Запрос от ... на следующие сервисы: ...'
         SenderBots.access_request_chat_bot.post_message(SenderBots.new_employee_channel_id, message)
 
-    '''def updateBots(self):
-        sender = Sender.objects.first()
-        employee_chat_bot = sender.newEmployeeChatBot
-        access_chat_bot = sender.accessRequestChatBot
-        self.createBot(employee_chat_bot, sender.newEmployeeChannelId, ChatBotType.NewEmployeeBot)
-        self.createBot(access_chat_bot, sender.accessRequestChannelId, ChatBotType.AccessRequestBot)
 
-    def createBot(self, chat_bot, channel_id, chat_bot_type):
-        if chat_bot_type == ChatBotType.NewEmployeeBot:
-            self.createNewEmployeeBot(chat_bot, channel_id)
-
-        if chat_bot_type == ChatBotType.AccessRequestBot:
-            self.createAccessRequestBot(chat_bot, channel_id)'''
+if Sender.objects.first():
+    SenderBots.updateBots()
