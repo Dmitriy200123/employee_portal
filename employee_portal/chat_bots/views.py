@@ -1,5 +1,6 @@
 from chat_bots.forms import ChatBotForm, SenderForm
 from chat_bots.models import ChatBot, Sender
+from chat_bots.sender_bots import MessengerType
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -31,14 +32,17 @@ class AddChatBotPage(CreateView):
     @staticmethod
     def is_valid_token(token: str, bot_type):
         # ToDO: Make slack bot token validation
-        if bot_type.messenger_type == 'Telegram':
+        if bot_type.messenger_type == MessengerType.Telegram.name:
             try:
                 bot = TelegramBot(token)
             except InvalidToken:
                 return False
 
         else:
-            bot = SlackBot(token)
+            try:
+                bot = SlackBot(token)
+            except Exception:
+                return False
 
         return True
 
