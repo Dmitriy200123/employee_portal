@@ -18,3 +18,9 @@ class SenderForm(forms.ModelForm):
         model = Sender
         fields = ('newEmployeeChatBot', 'newEmployeeChannelId', 'accessRequestChatBot', 'accessRequestChannelId',
                   'sendTime')
+        widgets = {
+            'newEmployeeChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
+            'newEmployeeChannelId': forms.NumberInput(attrs={'class': 'можно менять'}),
+            'accessRequestChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
+            'accessRequestChannelId': forms.NumberInput(attrs={'class': 'можно менять'})
+        }
