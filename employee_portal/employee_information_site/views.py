@@ -85,7 +85,6 @@ class EmployeeQuestionnaire(TemplateView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        employee = Employee.objects.filter(user=request.user.id)
         form = ProfileForm(request.POST, request.FILES, initial={'user': request.user.id})
 
         if form.is_valid():

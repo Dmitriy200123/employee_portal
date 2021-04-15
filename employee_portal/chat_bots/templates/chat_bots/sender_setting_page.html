@@ -9,7 +9,6 @@
     <p><a href="{% url 'employee_information_site:home_page' %}">На главную</a></p>
 </header>
 
-{{ sender }}
 <p>
     <label for="id_newEmployeeChatBot">Бот нового сотрудника:</label>
     <input type="text" readonly name="newEmployeeChatBot" value="{{ sender.newEmployeeChatBot }}"
@@ -27,8 +26,8 @@
            id="id_accessRequestChatBot">
 </p>
 <p>
-    <label for="id_accessRequestChannelId">Id канала о новом сотруднике:</label>
-    <input type="number" readonly name="accessRequestChannelId" value="{{ sender.newEmployeeChannelId }}"
+    <label for="id_accessRequestChannelId">Id канала о запросе доступа:</label>
+    <input type="number" readonly name="accessRequestChannelId" value="{{ sender.accessRequestChannelId }}"
            id="id_accessRequestChannelId">
 </p>
 <p>
