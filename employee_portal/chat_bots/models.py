@@ -1,5 +1,3 @@
-import uuid
-
 from django.db import models
 
 
@@ -19,4 +17,17 @@ class ChatBot(models.Model):
     token = models.CharField(max_length=100, verbose_name='Токен')
 
     def __str__(self):
-        return self.name
+        return f'{self.botType}: {self.name}'
+
+
+class Sender(models.Model):
+    newEmployeeChatBot = models.ForeignKey(ChatBot, related_name='%(class)s_new_employee_chat_bot',
+                                           on_delete=models.CASCADE, verbose_name="Бот нового сотрудника")
+    newEmployeeChannelId = models.IntegerField(verbose_name="Id канала о новом сотруднике")
+    accessRequestChatBot = models.ForeignKey(ChatBot, related_name='%(class)s_access_request_chat_bot',
+                                             on_delete=models.CASCADE, verbose_name="Бот доступа к сервисам")
+    accessRequestChannelId = models.IntegerField(verbose_name="Id канала о запросе доступа")
+    sendTime = models.TimeField(verbose_name="Время отправки")
+
+    def __str__(self):
+        return f'{self.newEmployeeChatBot}, {self.accessRequestChatBot}'

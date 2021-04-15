@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройка отправки уведомлений</title>
+</head>
+<body>
+<header>
+    <p><a href="{% url 'employee_information_site:home_page' %}">На главную</a></p>
+</header>
+
+{{ sender }}
+<p>
+    <label for="id_newEmployeeChatBot">Бот нового сотрудника:</label>
+    <input type="text" readonly name="newEmployeeChatBot" value="{{ sender.newEmployeeChatBot }}"
+           id="id_newEmployeeChatBot">
+</p>
+<p>
+    <label for="id_newEmployeeChannelId">Id канала о новом сотруднике:</label>
+    <input type="number" readonly name="newEmployeeChannelId" value="{{ sender.newEmployeeChannelId }}"
+           id="id_newEmployeeChannelId">
+</p>
+
+<p>
+    <label for="id_accessRequestChatBot">Бот доступа к сервисам:</label>
+    <input type="text" readonly name="accessRequestChatBot" value="{{ sender.accessRequestChatBot }}"
+           id="id_accessRequestChatBot">
+</p>
+<p>
+    <label for="id_accessRequestChannelId">Id канала о новом сотруднике:</label>
+    <input type="number" readonly name="accessRequestChannelId" value="{{ sender.newEmployeeChannelId }}"
+           id="id_accessRequestChannelId">
+</p>
+<p>
+    <label for="id_sendTime">Время отправки:</label>
+    <input type="text" readonly name="sendTime" value="{{ sender.sendTime }}" id="id_sendTime">
+</p>
+
+<form action="{% url 'chatBots:updateSender' %}">
+    <input type="submit" value="Редактировать">
+</form>
+
+</body>
+</html>

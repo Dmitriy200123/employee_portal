@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение настроек отправки уведомлений</title>
+</head>
+<body>
+<header>
+    <p><a href="{% url 'chatBots:senderSetting' %}">Назад</a></p>
+</header>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Сохранить">
+</form>
+</body>
+</html>
