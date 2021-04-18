@@ -9,6 +9,7 @@ class SlackBot:
         self.scheduler = BackgroundScheduler()
         self.scheduler.start()
         self.scheduler.pause()
+        self.client.auth_test()
 
     def post_message(self, message, channel_id):
         if len(self.scheduler.get_jobs()) == 0:

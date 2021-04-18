@@ -27,5 +27,5 @@ class MessageToSend(models.Model):
     channel = models.CharField(max_length=50)
     message = models.CharField(max_length=50)
     date = models.DateField(default=datetime.date.today)
-    time = models.TimeField(default=datetime.datetime.now)
+    time = models.TimeField(default=datetime.datetime.now().replace(second=0, microsecond=0))
     botType = models.ForeignKey(BotType, on_delete=models.CASCADE)

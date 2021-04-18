@@ -22,7 +22,7 @@ class SendMessageForm(forms.ModelForm):
         date = forms.DateField(input_formats=['%d-%m-%Y'])
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
-            'time': forms.TimeInput(attrs={'type': 'time'}),
+            'time': forms.TimeInput(attrs={'type': 'time', 'step': '60'}),
         }
 
     def send_message(self):
@@ -35,7 +35,10 @@ class SendMessageForm(forms.ModelForm):
             bot = telegramBot
         if type == 'Slack':
             bot = slackBot
-        if datetime.datetime.now() + datetime.timedelta(minutes=1) < time:
+        if datetime.datetime.now().minute > time.minute:
+            return "Time in past"
+        if datetime.datetime.now() < time:
             bot.post_scheduled_message(date=time, channel_id=data['channel'], message=data['message'])
         else:
             bot.post_message(channel_id=data['channel'], message=data['message'])
+        return True

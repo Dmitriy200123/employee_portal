@@ -73,5 +73,7 @@ class SendMessageView(FormView):
     model = MessageToSend
 
     def form_valid(self, form):
-        form.send_message()
+        res = form.send_message()
+        if res is not True:
+            return render(self.request, self.template_name, {'error': res})
         return super().form_valid(form)
