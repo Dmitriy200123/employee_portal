@@ -5,13 +5,6 @@ from django.db import models
 # Create your models here.
 
 
-class Service(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-
 class CompanyDepartment(models.Model):
     name = models.CharField(max_length=50)
 
@@ -78,3 +71,18 @@ class Candidate(PersonBase):
 
     def __str__(self):
         return self.full_name
+
+
+class Service(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class EmployeeServices(models.Model):
+    employee = models.ForeignKey(Employee, null=True, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.employee}:{self.service}"

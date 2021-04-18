@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from .forms import ProfileForm
-from .models import Employee, Service
+from .models import Employee, Service, EmployeeServices
 
 
 # Create your views here.
@@ -30,6 +30,16 @@ class ServiceListView(ListView):
     model = Service
 
     def post(self, request, *args, **kwargs):
+        user = Employee.objects.filter(user=request.user.id)
+        if not user:
+            return redirect('employee_information_site:service_list')
+
+        EmployeeServices.objects.filter(employee=user.first()).delete()
+
+        services = request.POST.getlist('serviceCheck')
+        for serv in services:
+            service = Service.objects.filter(name=serv).first()
+            EmployeeServices.objects.update_or_create(employee=user.first(), service=service)
         return render(request, self.template_name, {'text': 'Ok'})
 
 
@@ -69,6 +79,7 @@ class ProfileEditPageView(TemplateView):
         form.fields['user'].disabled = True
         form.fields['is_new_employee'].disabled = True
 
+
 class EmployeeQuestionnaire(TemplateView):
     template_name = "employee_information_site\employee_questionnaire.html"
 
@@ -86,4 +97,3 @@ class EmployeeQuestionnaire(TemplateView):
             return redirect('employee_information_site:profile')
 
         return render(request, self.template_name, {'form': form})
-
