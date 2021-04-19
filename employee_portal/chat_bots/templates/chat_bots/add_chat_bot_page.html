@@ -1,21 +1,67 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Добавить чат-бота</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <title>Добавить чат - бота</title>
+     <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
 </head>
 <body>
 <header>
-    <p><a href="{% url 'chatBots:chatBotsSetting' %}">Назад</a></p>
+    <div class="header_navbar_menu" id="navbarNav">
+        <ul class="nav">
+            <div class="nav_img">
+                <li class="nav-item_active">
+                    <a class="nav-link_active" href="https://www.skblab.ru/">
+                        <img src="{% static 'images/skb-lab.png' %}" width="149" height="42" alt="СКБ-Лаб"> </a>
+                </li>
+            </div>
+            <div class="nav_button">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'authentication:login' %}">Выход</a>
+                </li>
+            </div>
+        </ul>
+    </div>
+   <!-- <p><a href="{% url 'chatBots:chatBotsSetting' %}">Назад</a></p> -->
 </header>
+<main class="grid_container">
+<div class="gray">
+    <table class="left_menu">
+        <tr>
+            <td> <img src="{% static 'images/Group.png' %}" alt="Ебаный ключ"></td>
+            <td> <a href="">  Доступ к сервисам</a></td>
+        </tr>
+        <tr>
+            <td> <img src="{% static 'images/calendar.png' %}" alt="Ебаный календарь"></td>
+            <td><a href="">График отпусков</a></td>
+        </tr>
+        <tr>
+            <td> <img src="{% static 'images/user 1.png' %}" alt="Ебаный Сотрудник"></td>
+            <td><a href="">Сотрудники</a></td>
+        </tr>
+         <tr>
+            <td> <img src="{% static 'images/Groupgey.png' %}" alt="Ебаный бот"></td>
+            <td><a href="">Настройка ботов</a></td>
+        </tr>
+    </table>
+    <div class="settings">
+        <img src="{% static 'images/gaysex.png' %}" alt="Ебаная шестерня">
+        <a href="">Настройки</a>
+    </div>
+</div>
 
+<div class="margin">
+    <h1> Добавить бота </h1>
+
+{{ form.namebot }}
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Сохранить">
+        <input class="button" type="submit" value="Сохранить">
+
 </form>
+
 {% if chatBot %}
     <form method="post" action="{% url 'chatBots:deleteChatBot' %}">
         {% csrf_token %}
@@ -23,5 +69,7 @@
         <input type="submit" value="Удалить">
     </form>
 {% endif %}
+</div>
+</main>
 </body>
 </html>

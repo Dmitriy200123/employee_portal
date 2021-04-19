@@ -1,0 +1,74 @@
+body{
+    font-family: "Proxima Nova";
+    font-style: normal;
+}
+.grid_container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+.nav {
+    list-style: none;
+}
+.nav_button {
+    display: inline-block;
+    margin-right: 30px;
+    margin-left: auto;
+    margin-right: 0em;
+    float: right;
+    font-size: 20px;
+}
+
+.left_menu {
+    margin-top: 7%;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 26px;
+    border-collapse:collapse;
+    border-spacing: 15px;
+    border-color: black;
+}
+
+.settings {
+    font-size: 26px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: 4%;
+    color: red;
+}
+
+.nav-item {
+    display: inline-block;
+    margin-right: 50px;
+}
+
+
+a{
+    text-decoration: none;
+    color: black;
+}
+.button{
+    background: #00AA00;
+    border-radius: 6px;
+    width: 369px;
+    height: 63px;
+    color:white;
+    font-size: 22px;
+}
+
+h1 {
+    font-size: 50px;
+}
+.gray{
+    height: 100%;
+    background: #F5F5F5;
+}
+.margin{
+    margin-left: 5%;
+}
+h4{
+    font-size: 90%;
+}
+.color{
+    width: 500px;
+}
