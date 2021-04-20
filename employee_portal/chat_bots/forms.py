@@ -27,18 +27,15 @@ class SendMessageForm(forms.ModelForm):
 
     def send_message(self):
         data = self.cleaned_data
-        print(data)
         type = str(data['botType'])
         time = datetime.datetime.combine(data['date'], data['time'])
         bot = telegramBot
-        if type == 'Telegram':
-            bot = telegramBot
         if type == 'Slack':
             bot = slackBot
-        if datetime.datetime.now().minute > time.minute:
-            return "Time in past"
+        if datetime.datetime.now() > time + datetime.timedelta(minutes=1):
+            return {'Result': 'Bad', 'Message': 'Time in past'}
         if datetime.datetime.now() < time:
             bot.post_scheduled_message(date=time, channel_id=data['channel'], message=data['message'])
         else:
             bot.post_message(channel_id=data['channel'], message=data['message'])
-        return True
+        return {'Result': 'Ok', 'Message': 'Ok'}
