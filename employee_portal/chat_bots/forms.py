@@ -1,8 +1,7 @@
-from chat_bots.models import ChatBot, Sender, BotType
+from chat_bots.models import ChatBot, Sender, BotType, MessageToSend
 from django import forms
 from telegram_bot.bot import TelegramBot
 from slack_bot.bot import SlackBot
-from django.db import models
 import datetime
 
 telegramBot = TelegramBot('1736332153:AAFb6_GN9SqZMSFa0aLqUAU6IM32nLaCZr8')
@@ -45,6 +44,7 @@ class SendMessageForm(forms.ModelForm):
 
     def send_message(self):
         data = self.cleaned_data
+        print(data)
         type = str(data['botType'])
         time = datetime.datetime.combine(data['date'], data['time'])
         bot = telegramBot
