@@ -44,7 +44,6 @@ class SendMessageForm(forms.ModelForm):
 
     def send_message(self):
         data = self.cleaned_data
-        print(data)
         type = str(data['botType'])
         time = datetime.datetime.combine(data['date'], data['time'])
         bot = telegramBot
