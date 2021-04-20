@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from .forms import ProfileForm
 from .models import Employee, Service, EmployeeServices
+from chat_bots.sender_bots import SenderBots
 
 
 # Create your views here.
@@ -37,6 +38,7 @@ class ServiceListView(ListView):
         EmployeeServices.objects.filter(employee=user.first()).delete()
 
         services = request.POST.getlist('serviceCheck')
+        SenderBots.sendAccessEmployeeMessage()
         for serv in services:
             service = Service.objects.filter(name=serv).first()
             EmployeeServices.objects.update_or_create(employee=user.first(), service=service)
@@ -63,6 +65,7 @@ class ProfileEditPageView(TemplateView):
 
         if employee:
             form = ProfileForm(request.POST, request.FILES, instance=employee.first())
+            form.fields['is_new_employee'].disabled = True
         else:
             form = ProfileForm(request.POST, request.FILES, initial={'user': request.user.id})
 
@@ -70,6 +73,10 @@ class ProfileEditPageView(TemplateView):
 
         if form.is_valid():
             form.save()
+
+            if form.cleaned_data['is_new_employee'] and not employee:
+                SenderBots.sendNewEmployeeMessage(form.cleaned_data)
+
             return redirect('employee_information_site:profile')
 
         return render(request, self.template_name, {'form': form})
@@ -77,11 +84,10 @@ class ProfileEditPageView(TemplateView):
     @staticmethod
     def __disableFields(form: ProfileForm):
         form.fields['user'].disabled = True
-        form.fields['is_new_employee'].disabled = True
 
 
 class EmployeeQuestionnaire(TemplateView):
-    template_name = "employee_information_site\employee_questionnaire.html"
+    template_name = "employee_information_site/employee_questionnaire.html"
 
     def get(self, request, *args, **kwargs):
         form = ProfileForm(initial={'user': request.user.id})
@@ -89,7 +95,6 @@ class EmployeeQuestionnaire(TemplateView):
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        employee = Employee.objects.filter(user=request.user.id)
         form = ProfileForm(request.POST, request.FILES, initial={'user': request.user.id})
 
         if form.is_valid():

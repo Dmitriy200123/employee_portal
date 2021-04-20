@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Добавить чат-бота</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 </head>
 <body>
 <header>
@@ -14,7 +16,6 @@
     {{ form.as_p }}
     <input type="submit" value="Сохранить">
 </form>
-
 {% if chatBot %}
     <form method="post" action="{% url 'chatBots:deleteChatBot' %}">
         {% csrf_token %}

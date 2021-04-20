@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.forms import ModelForm
-from .models import Employee
+from .models import Employee, CompanyDepartment, EmployeePosition
 
 
 class ProfileForm(ModelForm):
@@ -13,4 +13,13 @@ class ProfileForm(ModelForm):
         model = Employee
         fields = ['user', 'photo', 'full_name', 'email', 'phone_number', 'department', 'position', 'description',
                   'is_new_employee']
-        widgets = {'user': forms.HiddenInput()}
+        widgets = {
+            'user': forms.HiddenInput(),
+            'photo': forms.ClearableFileInput(attrs={'class': 'edit'}),
+            'full_name': forms.TextInput(attrs={'class': 'edit'}),
+            'email': forms.EmailInput(attrs={'class': 'edit'}),
+            'phone_number': forms.NumberInput(attrs={'class': 'edit'}),
+            'department': forms.Select(choices=CompanyDepartment.objects.all(), attrs={'class': 'edit'}),
+            'position': forms.Select(choices=EmployeePosition.objects.all(), attrs={'class': 'edit'}),
+            'description': forms.Textarea(attrs={'class': 'edit'}),
+        }
