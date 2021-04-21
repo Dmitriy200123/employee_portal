@@ -7,9 +7,9 @@ class ChatBotForm(forms.ModelForm):
         model = ChatBot
         fields = ('name', 'botType', 'token')
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'color'}),
-            'botType': forms.Select(choices=BotType.objects.all(), attrs={'class': 'test'}),
-            'token': forms.TextInput(attrs={'class': 'test'})
+            'name': forms.TextInput(attrs={'class': 'right_side text_bot', 'placeholder': 'Введите имя бота'}),
+            'botType': forms.Select(choices=BotType.objects.all(), attrs={'class': 'right_side text_bot','placeholder': 'Выберите тип бота'}),
+            'token': forms.TextInput(attrs={'class': 'right_side text_bot','placeholder': 'Введите токен бота'})
         }
 
 

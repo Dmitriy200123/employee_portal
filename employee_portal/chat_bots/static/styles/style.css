@@ -1,10 +1,12 @@
 body{
     font-family: "Proxima Nova";
     font-style: normal;
+    margin: 0;
 }
 .grid_container {
     display: grid;
     grid-template-columns: 20% 80%;
+    min-height: 100vh;
 }
 .nav {
     list-style: none;
@@ -29,12 +31,12 @@ body{
 }
 
 .settings {
+    padding: 0;
     font-size: 26px;
     margin-right: auto;
     margin-left: auto;
-    margin-top: auto;
+    margin-top: 100%;
     margin-bottom: 4%;
-    color: red;
 }
 
 .nav-item {
@@ -50,6 +52,7 @@ a{
 .button{
     background: #00AA00;
     border-radius: 6px;
+    border-color: grey;
     width: 369px;
     height: 63px;
     color:white;
@@ -60,15 +63,44 @@ h1 {
     font-size: 50px;
 }
 .gray{
-    height: 100%;
+    height: 90%;
     background: #F5F5F5;
 }
 .margin{
     margin-left: 5%;
+    height: 90%;
 }
 h4{
     font-size: 90%;
 }
-.color{
-    width: 500px;
+
+table {
+    border-collapse: separate; /* Способ отображения границы */
+    width: 100%; /* Ширина таблицы */
+    border-spacing: 11px 13px; /* Расстояние между ячейками */
+   }
+td {
+    padding: 10px; /* Поля вокруг текста */
+   }
+.right_side{
+    padding-bottom: 30px;
+    width: 45%;
+    height: 60%;
+    display: block;
+
+    background: #FFFFFF;
+    border: 2px solid #CFCFCF;
+    box-sizing: border-box;
+    border-radius: 6px;
 }
+
+.text_bot{
+    width: 80%;
+    height: 63px;
+    padding: 12px 20px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-size: 100px;
+   }
+

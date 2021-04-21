@@ -18,7 +18,7 @@
             </div>
             <div class="nav_button">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authentication:login' %}">Выход</a>
+                    <a class="nav-link" href="{% url 'authentication:login' %}"> Выход</a>
                 </li>
             </div>
         </ul>
@@ -27,8 +27,9 @@
 </header>
 <main class="grid_container">
 <div class="gray">
-    <table class="left_menu">
-        <tr>
+    {{ form.user }}
+     <table class="left_menu">
+        <tr class="row_spacing">
             <td> <img src="{% static 'images/Group.png' %}" alt="Ебаный ключ"></td>
             <td> <a href="">  Доступ к сервисам</a></td>
         </tr>
@@ -44,11 +45,12 @@
             <td> <img src="{% static 'images/Groupgey.png' %}" alt="Ебаный бот"></td>
             <td><a href="">Настройка ботов</a></td>
         </tr>
+
     </table>
-    <div class="settings">
+ <div class="settings">
         <img src="{% static 'images/gaysex.png' %}" alt="Ебаная шестерня">
         <a href="">Настройки</a>
-    </div>
+ </div>
 </div>
 
 <div class="margin">
@@ -72,4 +74,5 @@
 </div>
 </main>
 </body>
+
 </html>
