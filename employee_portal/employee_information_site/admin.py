@@ -6,9 +6,9 @@ from .models import CompanyDepartment, EmployeePosition, Employee, Candidate, Ca
 
 
 class EmployeeList(admin.ModelAdmin):
-    list_display = ('full_name', 'created_at', 'position')
+    list_display = ('first_name', 'second_name', 'patronymic', 'created_at', 'position')
     list_filter = ['created_at', 'position']
-    search_fields = ['full_name']
+    search_fields = ['first_name', 'second_name', 'patronymic']
 
 
 class CandidateList(EmployeeList):

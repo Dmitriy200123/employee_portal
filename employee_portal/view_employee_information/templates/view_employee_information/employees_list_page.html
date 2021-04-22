@@ -20,7 +20,7 @@
 <h1>Список сотрудников</h1>
 {% for employee in page_obj %}
     <p>
-        <a href="{% url 'employeeInformation' %}?user={{ employee.user.id }}">{{ employee.full_name }}. {{ employee.position }}.</a>
+        <a href="{% url 'employeeInformation' %}?user={{ employee.user.id }}">{{ employee }}. {{ employee.position }}.</a>
     </p>
 {% endfor %}
 
