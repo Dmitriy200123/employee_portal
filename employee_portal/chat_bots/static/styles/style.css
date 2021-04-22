@@ -6,18 +6,40 @@ body{
 .grid_container {
     display: grid;
     grid-template-columns: 20% 80%;
-    min-height: 100vh;
+    min-height: 90vh;
 }
 .nav {
     list-style: none;
 }
+
+.nav_img {
+    display: inline-block;
+}
+
 .nav_button {
     display: inline-block;
     margin-right: 30px;
     margin-left: auto;
     margin-right: 0em;
     float: right;
+}
+
+.nav-item {
+    display: inline-block;
+    margin-right: 50px;
+}
+
+a.nav-link {
+    color: #000000;
+    font-style: normal;
+    text-decoration: none;
+    font-weight: 600;
     font-size: 20px;
+    line-height: 24px;
+}
+
+a.nav-link:hover {
+    color: #22B222;
 }
 
 .left_menu {
@@ -52,7 +74,7 @@ a{
 .button{
     background: #00AA00;
     border-radius: 6px;
-    border-color: grey;
+    border-color: #00AA00;
     width: 369px;
     height: 63px;
     color:white;
@@ -104,3 +126,19 @@ td {
     text-size: 100px;
    }
 
+label{
+    font-size: 25px;
+}
+
+.settings{
+    padding-left: 10px;
+    margin-top: 100%;
+}
+
+.settings a{
+    margin-left: 10%;
+}
+
+button:active, button:focus {
+  outline: none;
+}

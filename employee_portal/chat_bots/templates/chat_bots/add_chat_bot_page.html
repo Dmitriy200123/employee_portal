@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Добавить чат - бота</title>
-     <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/style.css' %}">
 </head>
 <body>
 <header>
@@ -23,55 +23,53 @@
             </div>
         </ul>
     </div>
-   <!-- <p><a href="{% url 'chatBots:chatBotsSetting' %}">Назад</a></p> -->
+    <!-- <p><a href="{% url 'chatBots:chatBotsSetting' %}">Назад</a></p> -->
 </header>
 <main class="grid_container">
-<div class="gray">
-    {{ form.user }}
-     <table class="left_menu">
-        <tr class="row_spacing">
-            <td> <img src="{% static 'images/Group.png' %}" alt="Ебаный ключ"></td>
-            <td> <a href="">  Доступ к сервисам</a></td>
-        </tr>
-        <tr>
-            <td> <img src="{% static 'images/calendar.png' %}" alt="Ебаный календарь"></td>
-            <td><a href="">График отпусков</a></td>
-        </tr>
-        <tr>
-            <td> <img src="{% static 'images/user 1.png' %}" alt="Ебаный Сотрудник"></td>
-            <td><a href="">Сотрудники</a></td>
-        </tr>
-         <tr>
-            <td> <img src="{% static 'images/Groupgey.png' %}" alt="Ебаный бот"></td>
-            <td><a href="">Настройка ботов</a></td>
-        </tr>
+    <div class="gray">
+        <table class="left_menu">
+            <tr class="row_spacing">
+                <td><img src="{% static 'images/Group.png' %}" alt="Ебаный ключ"></td>
+                <td><a href="">Доступ к сервисам</a></td>
+            </tr>
+            <tr>
+                <td><img src="{% static 'images/calendar.png' %}" alt="Ебаный календарь"></td>
+                <td><a href="">График отпусков</a></td>
+            </tr>
+            <tr>
+                <td><img src="{% static 'images/user 1.png' %}" alt="Ебаный Сотрудник"></td>
+                <td><a href="">Сотрудники</a></td>
+            </tr>
+            <tr>
+                <td><img src="{% static 'images/Groupgey.png' %}" alt="Ебаный бот"></td>
+                <td><a href="">Настройка ботов</a></td>
+            </tr>
+        </table>
+        <div class="settings">
+            <img src="{% static 'images/gaysex.png' %}" alt="Ебаная шестерня">
+            <a href="">Настройки</a>
+        </div>
+    </div>
 
-    </table>
- <div class="settings">
-        <img src="{% static 'images/gaysex.png' %}" alt="Ебаная шестерня">
-        <a href="">Настройки</a>
- </div>
-</div>
+    <div class="margin">
+        <h1> Добавить бота </h1>
 
-<div class="margin">
-    <h1> Добавить бота </h1>
+        {{ form.namebot }}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input class="button" type="submit" value="Сохранить">
 
-{{ form.namebot }}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-        <input class="button" type="submit" value="Сохранить">
+        </form>
 
-</form>
-
-{% if chatBot %}
-    <form method="post" action="{% url 'chatBots:deleteChatBot' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id" value="{{ chatBot.id }}">
-        <input type="submit" value="Удалить">
-    </form>
-{% endif %}
-</div>
+        {% if chatBot %}
+            <form method="post" action="{% url 'chatBots:deleteChatBot' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ chatBot.id }}">
+                <input type="submit" value="Удалить">
+            </form>
+        {% endif %}
+    </div>
 </main>
 </body>
 
