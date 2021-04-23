@@ -20,10 +20,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include('authentication.urls')),
-    path('employees_information/', include('view_employee_information.urls')),
-    path('chatbots/', include('chat_bots.urls')),
-    path('', include('employee_information_site.urls'))
+    # path('auth/', include('authentication.urls')),
+    # path('employees_information/', include('view_employee_information.urls')),
+    # path('chatbots/', include('chat_bots.urls')),
+    # path('', include('employee_information_site.urls'))
 ]
 
 if settings.DEBUG:

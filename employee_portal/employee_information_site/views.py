@@ -2,7 +2,7 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from .forms import ProfileForm
-from .models import Employee, Service
+from .models import Employee, Service, EmployeeServices
 from chat_bots.sender_bots import SenderBots
 
 
@@ -31,7 +31,17 @@ class ServiceListView(ListView):
     model = Service
 
     def post(self, request, *args, **kwargs):
+        user = Employee.objects.filter(user=request.user.id)
+        if not user:
+            return redirect('employee_information_site:service_list')
+
+        EmployeeServices.objects.filter(employee=user.first()).delete()
+
+        services = request.POST.getlist('serviceCheck')
         SenderBots.sendAccessEmployeeMessage()
+        for serv in services:
+            service = Service.objects.filter(name=serv).first()
+            EmployeeServices.objects.update_or_create(employee=user.first(), service=service)
         return render(request, self.template_name, {'text': 'Ok'})
 
 

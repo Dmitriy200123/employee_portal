@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import CompanyDepartment, EmployeePosition, Employee, Candidate, CandidateProspectivePosition, Service
+from .models import CompanyDepartment, EmployeePosition, Employee, Candidate, CandidateProspectivePosition, Service, EmployeeServices
 
 
 # Register your models here.
 
 
 class EmployeeList(admin.ModelAdmin):
-    list_display = ('first_name', 'second_name', 'patronymic', 'created_at', 'position')
+    list_display = ('full_name', 'created_at', 'position')
     list_filter = ['created_at', 'position']
-    search_fields = ['first_name', 'second_name', 'patronymic']
+    search_fields = ['full_name']
 
 
 class CandidateList(EmployeeList):
@@ -24,3 +24,4 @@ admin.site.register(CandidateProspectivePosition)
 admin.site.register(Candidate, CandidateList)
 
 admin.site.register(Service)
+admin.site.register(EmployeeServices)
