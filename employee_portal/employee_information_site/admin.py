@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import CompanyDepartment, EmployeePosition, Employee, Candidate, CandidateProspectivePosition, Service
+from .models import CompanyDepartment, EmployeePosition, Employee, Candidate, CandidateProspectivePosition, Service, \
+    EmployeeServices
 
 
 # Register your models here.
@@ -24,3 +25,4 @@ admin.site.register(CandidateProspectivePosition)
 admin.site.register(Candidate, CandidateList)
 
 admin.site.register(Service)
+admin.site.register(EmployeeServices)
