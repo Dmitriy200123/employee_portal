@@ -1,9 +1,9 @@
-from chat_bots.forms import ChatBotForm, SenderForm
-from chat_bots.models import ChatBot, Sender
+from chat_bots.forms import ChatBotForm, SenderForm, SendMessageForm
+from chat_bots.models import ChatBot, Sender, MessageToSend
 from chat_bots.sender_bots import MessengerType, SenderBots
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
 from slack_bot.bot import SlackBot
 from telegram.error import InvalidToken
 from telegram_bot.bot import TelegramBot
@@ -109,3 +109,18 @@ class UpdateOrCreateSenderPage(UpdateView):
     def form_valid(self, form):
         SenderBots.updateBots()
         return super().form_valid(form)
+
+
+class SendMessageView(FormView):
+    template_name = 'chat_bots/send_message.html'
+    form_class = SendMessageForm
+    success_url = reverse_lazy('chatBots:chatBotsSetting')
+    model = MessageToSend
+
+    def form_valid(self, form):
+        response = form.send_message()
+        if response['Result'] == 'OK':
+            return super().form_valid(form)
+        else:
+            form.add_error('date', response['Message'])
+            return super().form_invalid(form)

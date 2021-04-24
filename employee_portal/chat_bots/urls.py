@@ -11,4 +11,5 @@ urlpatterns = [
     path('delete_chatbot/', staff_member_required(views.DeleteChatBotPage.as_view()), name='deleteChatBot'),
     path('sender_setting/', staff_member_required(views.SenderSettingPage.as_view()), name='senderSetting'),
     path('sender_update/', staff_member_required(views.UpdateOrCreateSenderPage.as_view()), name='updateSender'),
+    path('send_message/', staff_member_required(views.SendMessageView.as_view()), name='sendMessage'),
 ]
