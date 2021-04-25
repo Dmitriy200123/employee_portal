@@ -1,5 +1,5 @@
 import enum
-
+import datetime
 from chat_bots.models import Sender
 from slack_bot.bot import SlackBot
 from telegram_bot.bot import TelegramBot
@@ -35,15 +35,33 @@ class SenderBots:
             return SlackBot(chat_bot.token)
 
     @staticmethod
-    def sendNewEmployeeMessage(data):
-        message = f"Новый сотрудник {data['full_name']}. Отдел {data['department']}," \
-                  f" должность {data['position']}"
-        SenderBots.new_employee_chat_bot.post_message(SenderBots.new_employee_channel_id, message)
+    def getCorrectTime():
+        time = Sender.objects.filter(newEmployeeChannelId=SenderBots.new_employee_channel_id).first().sendTime
+        now = datetime.datetime.now().time()
+        date = datetime.date.today()
+        if time < now:
+            date = date + datetime.timedelta(days=1)
+        return datetime.datetime.combine(date, time)
 
     @staticmethod
-    def sendAccessEmployeeMessage():
-        message = f'Запрос от ... на следующие сервисы: ...'
-        SenderBots.access_request_chat_bot.post_message(SenderBots.new_employee_channel_id, message)
+    def sendNewEmployeeMessage(data):
+        # todo fix first_name filed
+        message = f"Новый сотрудник {data['first_name']}. Отдел {data['department']}," \
+                  f" должность {data['position']}"
+
+        correct_time = SenderBots.getCorrectTime()
+
+        SenderBots.new_employee_chat_bot.post_scheduled_message(date=correct_time, message=message,
+                                                                channel_id=SenderBots.new_employee_channel_id)
+
+    @staticmethod
+    def sendAccessEmployeeMessage(user, services):
+        # todo fix first_name filed
+        message = f'Запрос от {user.first_name} на следующие сервисы: {", ".join(services)}'
+        correct_time = SenderBots.getCorrectTime()
+
+        SenderBots.access_request_chat_bot.post_message(date=correct_time, message=message,
+                                                        channel_id=SenderBots.new_employee_channel_id)
 
 
 if Sender.objects.first():
