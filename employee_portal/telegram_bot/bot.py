@@ -21,4 +21,4 @@ class TelegramBot:
         '''
         if len(self.scheduler.get_jobs()) == 0:
             self.scheduler.resume()
-        self.scheduler.add_job(self.post_message, 'date', run_date=date, args=[channel_id, message])
+        self.scheduler.add_job(self.post_message, 'date', run_date=date, args=[message, channel_id])

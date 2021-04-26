@@ -45,9 +45,8 @@ class SenderBots:
 
     @staticmethod
     def sendNewEmployeeMessage(data):
-        # todo fix first_name filed
-        message = f"Новый сотрудник {data['first_name']}. Отдел {data['department']}," \
-                  f" должность {data['position']}"
+        message = f"Новый сотрудник: {data['first_name']} {data['second_name']}. Отдел: {data['department']}," \
+                  f" должность: {data['position']}"
 
         correct_time = SenderBots.getCorrectTime()
 
@@ -56,11 +55,10 @@ class SenderBots:
 
     @staticmethod
     def sendAccessEmployeeMessage(user, services):
-        # todo fix first_name filed
-        message = f'Запрос от {user.first_name} на следующие сервисы: {", ".join(services)}'
+        message = f"{user.first_name} {user.second_name} запрашивает доступ к следующим сервисам: {', '.join(services)}"
         correct_time = SenderBots.getCorrectTime()
 
-        SenderBots.access_request_chat_bot.post_message(date=correct_time, message=message,
+        SenderBots.access_request_chat_bot.post_scheduled_message(date=correct_time, message=message,
                                                         channel_id=SenderBots.new_employee_channel_id)
 
 
