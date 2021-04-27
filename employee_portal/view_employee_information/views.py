@@ -1,6 +1,7 @@
 from django.views.generic import ListView, TemplateView
 from employee_information_site.models import Employee
 from view_employee_information.forms import FilterForm
+from django.db.models import Q
 
 
 # Create your views here.
@@ -32,7 +33,23 @@ class EmployeesListPage(ListView):
         position = 'position'
 
         if full_name in parameters:
-            queryset = queryset.filter(full_name__contains=parameters[full_name])
+            names = parameters[full_name].split(' ')
+
+            if len(names) == 1:
+                queryset = queryset.filter(
+                    Q(first_name__icontains=names[0]) | Q(second_name__icontains=names[0]) |
+                    Q(patronymic__icontains=names[0])
+                )
+            elif len(names) == 2:
+                queryset = queryset.filter(
+                    Q(first_name__icontains=names[0]) & Q(second_name__icontains=names[1]) |
+                    Q(first_name__icontains=names[0]) & Q(patronymic__icontains=names[1]) |
+                    Q(second_name__icontains=names[0]) & Q(patronymic__icontains=names[1])
+                )
+            else:
+                queryset = queryset.filter(
+                    Q(first_name__icontains=names[0]) & Q(second_name__icontains=names[1]) &
+                    Q(patronymic__icontains=names[2]))
 
         if department in parameters and parameters[department].isdigit():
             queryset = queryset.filter(department=int(parameters[department]))

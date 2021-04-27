@@ -1,4 +1,9 @@
+@font-face {
+font-family: This;
+   src: url("/../../../media/fonts/ProximaNova.ttf");
+}
+
 body{
-    font-family: "Proxima Nova";
+    font-family: This, serif;
     font-style: normal;
 }

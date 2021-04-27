@@ -14,7 +14,7 @@
         {% for object in object_list %}
         <li>
             {{object.name}}
-            <input type="checkbox" name="serviceCheck">
+            <input type="checkbox" name="serviceCheck" value="{{object.name}}">
         </li>
         {%endfor%}
     </ul>

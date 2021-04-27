@@ -11,12 +11,14 @@ class ProfileForm(ModelForm):
 
     class Meta:
         model = Employee
-        fields = ['user', 'photo', 'full_name', 'email', 'phone_number', 'department', 'position', 'description',
+        fields = ['user', 'photo', 'first_name', 'second_name', 'patronymic', 'email', 'phone_number', 'department', 'position', 'description',
                   'is_new_employee']
         widgets = {
             'user': forms.HiddenInput(),
             'photo': forms.ClearableFileInput(attrs={'class': 'edit'}),
-            'full_name': forms.TextInput(attrs={'class': 'edit'}),
+            'first_name': forms.TextInput(attrs={'class': 'edit'}),
+            'second_name': forms.TextInput(attrs={'class': 'edit'}),
+            'patronymic': forms.TextInput(attrs={'class': 'edit'}),
             'email': forms.EmailInput(attrs={'class': 'edit'}),
             'phone_number': forms.NumberInput(attrs={'class': 'edit'}),
             'department': forms.Select(choices=CompanyDepartment.objects.all(), attrs={'class': 'edit'}),

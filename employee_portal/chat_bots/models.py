@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -31,3 +33,11 @@ class Sender(models.Model):
 
     def __str__(self):
         return f'{self.newEmployeeChatBot}, {self.accessRequestChatBot}'
+
+
+class MessageToSend(models.Model):
+    channel = models.CharField(max_length=50)
+    message = models.CharField(max_length=50)
+    date = models.DateField(default=datetime.date.today)
+    time = models.TimeField(default=datetime.datetime.now().replace(second=0, microsecond=0))
+    bot = models.ForeignKey(ChatBot, on_delete=models.CASCADE)

@@ -37,8 +37,16 @@
     <img src="{{ employee.photo.url }}" width="80" height="80" alt="avatar">
 </div>
 <p>
-    <label for="id_full_name">Full name:</label>
-    <input type="text" readonly="" name="full_name" maxlength="50" id="id_full_name" value="{{ employee.full_name }}">
+    <label for="id_first_name">Имя</label>
+    <input type="text" readonly="" name="first_name" maxlength="50" id="id_first_name" value="{{ employee.first_name }}">
+</p>
+<p>
+    <label for="id_second_name">Фамилия</label>
+    <input type="text" readonly="" name="second_name" maxlength="50" id="id_second_name" value="{{ employee.second_name }}">
+</p>
+<p>
+    <label for="id_patronymic">Отчество</label>
+    <input type="text" readonly="" name="patronymic" maxlength="50" id="id_patronymic" value="{{ employee.patronymic }}">
 </p>
 <p>
     <label for="id_email">Email:</label>
