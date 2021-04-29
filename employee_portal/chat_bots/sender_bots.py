@@ -19,12 +19,13 @@ class SenderBots:
     @staticmethod
     def updateBots():
         sender = Sender.objects.first()
-        employee_chat_bot = sender.newEmployeeChatBot
-        access_chat_bot = sender.accessRequestChatBot
-        SenderBots.new_employee_channel_id = sender.newEmployeeChannelId
-        SenderBots.access_request_channel_id = sender.accessRequestChannelId
-        SenderBots.new_employee_chat_bot = SenderBots.createBot(employee_chat_bot)
-        SenderBots.access_request_chat_bot = SenderBots.createBot(access_chat_bot)
+        if sender:
+            employee_chat_bot = sender.newEmployeeChatBot
+            access_chat_bot = sender.accessRequestChatBot
+            SenderBots.new_employee_channel_id = sender.newEmployeeChannelId
+            SenderBots.access_request_channel_id = sender.accessRequestChannelId
+            SenderBots.new_employee_chat_bot = SenderBots.createBot(employee_chat_bot)
+            SenderBots.access_request_chat_bot = SenderBots.createBot(access_chat_bot)
 
     @staticmethod
     def createBot(chat_bot):

@@ -23,9 +23,10 @@ class SenderForm(forms.ModelForm):
                   'sendTime')
         widgets = {
             'newEmployeeChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
-            'newEmployeeChannelId': forms.NumberInput(attrs={'class': 'можно менять'}),
+            'newEmployeeChannelId': forms.TextInput(attrs={'class': 'можно менять'}),
             'accessRequestChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
-            'accessRequestChannelId': forms.NumberInput(attrs={'class': 'можно менять'})
+            'accessRequestChannelId': forms.TextInput(attrs={'class': 'можно менять'}),
+            'sendTime': forms.TimeInput(attrs={'type': 'time', 'step': '60', 'class': 'можно менять'})
         }
 
 
