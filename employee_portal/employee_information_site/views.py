@@ -38,7 +38,7 @@ class ServiceListView(ListView):
         EmployeeServices.objects.filter(employee=user.first()).delete()
 
         services = request.POST.getlist('serviceCheck')
-        SenderBots.sendAccessEmployeeMessage()
+        SenderBots.sendAccessEmployeeMessage(user.first(), services)
         for serv in services:
             service = Service.objects.filter(name=serv).first()
             EmployeeServices.objects.update_or_create(employee=user.first(), service=service)
@@ -74,9 +74,6 @@ class ProfileEditPageView(TemplateView):
         if form.is_valid():
             form.save()
 
-            if form.cleaned_data['is_new_employee'] and not employee:
-                SenderBots.sendNewEmployeeMessage(form.cleaned_data)
-
             return redirect('employee_information_site:profile')
 
         return render(request, self.template_name, {'form': form})
@@ -99,6 +96,8 @@ class EmployeeQuestionnaire(TemplateView):
 
         if form.is_valid():
             form.save()
+            if form.cleaned_data['is_new_employee']:
+                SenderBots.sendNewEmployeeMessage(form.cleaned_data)
             return redirect('employee_information_site:profile')
 
         return render(request, self.template_name, {'form': form})
