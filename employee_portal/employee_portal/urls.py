@@ -23,6 +23,7 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('employees_information/', include('view_employee_information.urls')),
     path('chatbots/', include('chat_bots.urls')),
+    path('schedule/', include('vacation_schedule.urls')),
     path('', include('employee_information_site.urls'))
 ]
 
