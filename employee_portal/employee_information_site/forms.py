@@ -7,7 +7,7 @@ from .models import Employee, CompanyDepartment, EmployeePosition
 class ProfileForm(ModelForm):
     phone_regex = RegexValidator(regex=r'^\+79\d{9}$',
                                  message="Phone number must be entered in the format: '+79112223344'")
-    phone_number = forms.CharField(validators=[phone_regex], max_length=12)
+    phone_number = forms.CharField(validators=[phone_regex], max_length=12, widget=forms.TextInput(attrs={'class': 'edit'}))
 
     class Meta:
         model = Employee
@@ -20,7 +20,6 @@ class ProfileForm(ModelForm):
             'second_name': forms.TextInput(attrs={'class': 'edit'}),
             'patronymic': forms.TextInput(attrs={'class': 'edit'}),
             'email': forms.EmailInput(attrs={'class': 'edit'}),
-            'phone_number': forms.NumberInput(attrs={'class': 'edit'}),
             'department': forms.Select(choices=CompanyDepartment.objects.all(), attrs={'class': 'edit'}),
             'position': forms.Select(choices=EmployeePosition.objects.all(), attrs={'class': 'edit'}),
             'description': forms.Textarea(attrs={'class': 'edit'}),
