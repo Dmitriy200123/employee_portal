@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<a href="{% url 'authentication:logout' %}">Выход</a>
 <h1>Анкета сотрудника</h1>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
