@@ -1,6 +1,8 @@
 from django import forms
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
+from vacation_schedule.models import DaysRemainder, VacationScheduleParameters
+
 from .forms import ProfileForm
 from .models import Employee, Service, EmployeeServices
 from chat_bots.sender_bots import SenderBots
@@ -73,6 +75,11 @@ class ProfileEditPageView(TemplateView):
 
         if form.is_valid():
             form.save()
+            if not DaysRemainder.objects.filter(employee=form.instance):
+                days_remainder = DaysRemainder()
+                days_remainder.maxCountDays = VacationScheduleParameters.objects.first()
+                days_remainder.employee = form.instance
+                days_remainder.save()
 
             return redirect('employee_information_site:profile')
 
