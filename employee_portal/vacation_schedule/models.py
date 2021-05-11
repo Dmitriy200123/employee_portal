@@ -22,3 +22,19 @@ class EmployeeVacationPeriod(models.Model):
 
     def __str__(self):
         return f'{self.employeeId}: {self.startDateVacation} - {self.endDateVacation}'
+
+
+class DaysRemainder(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name='Сотрудник')
+    maxCountDays = models.ForeignKey(VacationScheduleParameters, on_delete=models.CASCADE,
+                                     verbose_name='Максимальное число дней отпуска')
+    remainder = models.IntegerField(verbose_name='Остаток свободных дней отпуска')
+
+    def save(self, *args, **kwargs):
+        if self.maxCountDays and not self.remainder:
+            self.remainder = self.maxCountDays.maxCountDays
+
+        return super(DaysRemainder, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.employee}: {self.remainder} days'
