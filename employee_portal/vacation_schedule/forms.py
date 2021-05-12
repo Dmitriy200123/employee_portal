@@ -8,5 +8,7 @@ class VacationPeriodForm(forms.ModelForm):
         fields = ['employeeId', 'startDateVacation', 'endDateVacation', 'vacationDays']
         widgets = {
             'employeeId': forms.HiddenInput,
-            'vacationDays': forms.HiddenInput
+            'vacationDays': forms.HiddenInput,
+            'startDateVacation': forms.SelectDateWidget,
+            'endDateVacation': forms.SelectDateWidget
         }
