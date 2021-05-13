@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header>
+    <a href="{% url 'vacation_schedule:vacationListPage' %}">Изменить период отпусков</a>
+    <br>
+    <a href="#">Экспорт в pdf</a>
+</header>
+<h1>Расписание отпусков</h1>
+<ul>
+    {% for vacation in vacation_periods %}
+        <li>
+            <p>{{ vacation.startDateVacation }}</p>
+            <p>{{ vacation.endDateVacation }}</p>
+            <p>Дней отпуска: {{ vacation.vacationDays }}</p>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

@@ -5,6 +5,29 @@
     <title>Title</title>
 </head>
 <body>
-<h1>This will be vacation list in future</h1>
+<header>
+    <a href="{% url 'vacation_schedule:addVacation' %}">Добавить период отпуска</a>
+</header>
+<h1>Список периодов</h1>
+<ul>
+    {% for vacation in vacation_periods %}
+        <li>
+            <p>
+                <a href="{% url 'vacation_schedule:updateVacation' vacation.id %}">{{ vacation }}</a>
+            </p>
+            <p>{{ vacation.startDateVacation }}</p>
+            <p>{{ vacation.endDateVacation }}</p>
+            <p>Дней отпуска: {{ vacation.vacationDays }}</p>
+            <form method="post" action="{% url 'vacation_schedule:deleteVacation' vacation.id %}">
+                {% csrf_token %}
+                <input type="submit" value="Удалить">
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+<p>Осталось дней: {{ days_remainder.remainder }}</p>
+<form method="get" action="{% url 'vacation_schedule:vacationSchedulePage' %}">
+    <input type="submit" value="Сохранить расписание">
+</form>
 </body>
 </html>
