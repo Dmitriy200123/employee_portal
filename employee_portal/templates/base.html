@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Title
+        {% endblock %}
+    </title>
+    {% block load_styles %}
+        Styles
+    {% endblock %}
+</head>
+<body>
+<header>
+    {% block header %}
+        {% include 'inc/_top_nav_bar.html' %}
+    {% endblock %}
+</header>
+<main class="grid_container">
+    {% block left_content %}
+        {% include 'inc/_side_bar.html' %}
+    {% endblock %}
+    {% block right_content %}
+        Контент правой части
+    {% endblock %}
+</main>
+</body>
+</html>

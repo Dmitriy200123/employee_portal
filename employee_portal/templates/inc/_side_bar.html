@@ -1,0 +1,51 @@
+<div class="left_nav_bar">
+    <div class="left_nav_item">
+        <img src="/../media/{{ employee.photo }}" alt="Employee photo">
+    </div>
+    <div class="left_nav_item">
+        <a class="profile" href="{% url 'employee_information_site:profile' %}">{{ employee.first_name }}</a>
+    </div>
+    <div class="left_nav_item">
+        <img src="/../media/left_nav_bar_image/group.png" alt="Доступ">
+    </div>
+    <div class="left_nav_item">
+        {% if user.is_superuser %}
+            <a class="left_nav_link" href="/admin/employee_information_site/service/">Сервисы для сотрудников</a>
+        {% else %}
+            <a class="left_nav_link" href="{% url 'employee_information_site:service_list' %}">Доступ к сервисам</a>
+        {% endif %}
+    </div>
+    <div class="left_nav_item">
+        <img src="/../media/left_nav_bar_image/calendar.png" alt="Календарь">
+    </div>
+    <div class="left_nav_item">
+        <a class="left_nav_link" href="{% url 'vacation_schedule:vacationListPage' %}">График отпусков</a>
+    </div>
+    <div class="left_nav_item">
+        <img src="/../media/left_nav_bar_image/user.png" alt="Пользователь">
+    </div>
+    <div class="left_nav_item">
+        <a class="left_nav_link" href="{% url 'employeesListInformation' %}">Сотрудники</a>
+    </div>
+    {% if user.is_superuser %}
+        <div class="left_nav_item">
+            <img src="/../media/left_nav_bar_image/messages.png" alt="Сообщения">
+        </div>
+
+        <div class="left_nav_item">
+            <a class="left_nav_link" href="{% url 'chatBots:chatBotsSetting' %}">Настройка ботов</a>
+        </div>
+        <div class="left_nav_item">
+            <img src="/../media/left_nav_bar_image/settings.png" alt="Настройки">
+        </div>
+        <div class="left_nav_item">
+            <a class="left_nav_link" href="{% url 'chatBots:senderSetting' %}">Настройка отправки уведомлений</a>
+        </div>
+        <div class="left_nav_item">
+            <img src="/../media/left_nav_bar_image/messages.png" alt="Сообщения">
+        </div>
+        <div class="left_nav_item">
+            <a class="left_nav_link" href="{% url 'chatBots:sendMessage' %}">Отправить сообщение</a>
+        </div>
+    {% endif %}
+</div>

@@ -1,89 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
+{% extends 'base.html' %}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid justify-content-start">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"
-                       href="{% url 'employee_information_site:home_page' %}">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"
-                       href="{% url 'authentication:logout' %}">Выйти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'employee_information_site:profile' %}">Профиль</a>
-                </li>
-            </ul>
+{% load static %}
+
+{% block title %}
+    Профиль
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="employee_info">
+        <div class="left_info">
+            <img src="{{ employee.photo.url }}" alt="photo">
+            <form class="edit" action="{% url 'employee_information_site:profile_edit' %}">
+                <button type="submit" class="edit_button">Редактировать</button>
+            </form>
+        </div>
+        <div class="right_info">
+            <div>
+                <h1>{{ employee.first_name }} {{ employee.second_name }} {{ employee.patronymic }}</h1>
+            </div>
+
+            <div class="main_info">
+                <div class="main_info_title">
+                    <h2>Основная информация</h2>
+                </div>
+                <div class="department">
+                    <h3>Отдел</h3>
+                    <p>{{ employee.department }}</p>
+                </div>
+
+                <div class="position">
+                    <h3>Должность</h3>
+                    <p>{{ employee.position }}</p>
+                </div>
+            </div>
+
+            <div class="contacts">
+                <div class="contacts_title">
+                    <h2>Контакты</h2>
+                </div>
+                <div class="email">
+                    <h3>Email</h3>
+                    <p>{{ employee.email }}</p>
+                </div>
+
+                <div class="phone_number">
+                    <h3>Телефон</h3>
+                    <p>{{ employee.phone_number }}</p>
+                </div>
+            </div>
+
+            {% if employee.description %}
+                <div class>
+                    <h2>Дополнительно</h2>
+
+                    <div class="description_info">
+                        <h3>О себе </h3>
+                        <p>{{ employee.description }}</p>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
-</nav>
-<h1>My profile</h1>
-<div class="media">
-    <img src="{{ employee.photo.url }}" width="80" height="80" alt="avatar">
-</div>
-<p>
-    <label for="id_first_name">Имя</label>
-    <input type="text" readonly="" name="first_name" maxlength="50" id="id_first_name" value="{{ employee.first_name }}">
-</p>
-<p>
-    <label for="id_second_name">Фамилия</label>
-    <input type="text" readonly="" name="second_name" maxlength="50" id="id_second_name" value="{{ employee.second_name }}">
-</p>
-<p>
-    <label for="id_patronymic">Отчество</label>
-    <input type="text" readonly="" name="patronymic" maxlength="50" id="id_patronymic" value="{{ employee.patronymic }}">
-</p>
-<p>
-    <label for="id_email">Email:</label>
-    <input type="text" readonly="" name="email" id="id_email" value="{{ employee.email }}">
-</p>
-<p>
-    <label for="id_phone_number">Phone number:</label>
-    <input type="text" readonly="" name="phone_number" id="id_phone_number" value="{{ employee.phone_number }}">
-</p>
-<p>
-    <label for="id_department">Department:</label>
-    <input type="text" readonly="" name="department" id="id_department" value="{{ employee.department }}">
-</p>
-<p>
-    <label for="id_position">Position:</label>
-    <input type="text" readonly="" name="position" id="id_position" value="{{ employee.position }}">
-</p>
-<p>
-    <label for="id_description">Description:</label>
-    <textarea name="description" readonly="" cols="40" rows="5" id="id_description">{{ employee.description }}</textarea>
-</p>
-<p>
-    <label for="id_is_new_employee">Is new employee:</label>
-    <input type="checkbox" onclick="return false;" readonly name="is_new_employee" id="id_is_new_employee"
-            {% if employee.is_new_employee %}
-           checked
-            {% endif %}
-    >
-</p>
-<form action="{% url 'employee_information_site:profile_edit' %}">
-    <button type="submit" class="btn btn-success">Edit</button>
-</form>
-
-
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}
