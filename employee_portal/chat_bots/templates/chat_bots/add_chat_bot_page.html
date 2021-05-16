@@ -1,27 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Добавить чат-бота</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-</head>
-<body>
-<header>
-    <p><a href="{% url 'chatBots:chatBotsSetting' %}">Назад</a></p>
-</header>
+{% extends 'base.html' %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Сохранить">
-</form>
-{% if chatBot %}
-    <form method="post" action="{% url 'chatBots:deleteChatBot' %}">
-        {% csrf_token %}
-        <input type="hidden" name="id" value="{{ chatBot.id }}">
-        <input type="submit" value="Удалить">
-    </form>
-{% endif %}
-</body>
-</html>
+{% load static %}
+
+{% block title %}
+    {% if chatBot %}
+        Редактировать бота
+    {% else %}
+        Добавить бота
+    {% endif %}
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/add_and_edit_chat_bot_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="edit_chat_bot">
+    {% if chatBot %}
+        <h1> Редактировать бота </h1>
+    {% else %}
+        <h1> Добавить бота </h1>
+    {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="save_bot_info" type="submit">Сохранить</button>
+        </form>
+        {% if chatBot %}
+            <form method="post" action="{% url 'chatBots:deleteChatBot' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ chatBot.id }}">
+                <button class="delete_bot" type="submit">Удалить бота</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

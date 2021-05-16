@@ -4,6 +4,7 @@ from chat_bots.sender_bots import MessengerType, SenderBots
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, FormView
+from employee_information_site.models import Employee
 from slack_bot.bot import SlackBot
 from telegram.error import InvalidToken
 from telegram_bot.bot import TelegramBot
@@ -31,7 +32,6 @@ class AddChatBotPage(CreateView):
 
     @staticmethod
     def is_valid_token(token: str, bot_type):
-        # ToDO: Make slack bot token validation
         if bot_type.messenger_type == MessengerType.Telegram.name:
             try:
                 bot = TelegramBot(token)
@@ -45,6 +45,12 @@ class AddChatBotPage(CreateView):
                 return False
 
         return True
+
+    def get_context_data(self, **kwargs):
+        context = super(AddChatBotPage, self).get_context_data(**kwargs)
+        employee = Employee.objects.filter(user=self.request.user.id).first()
+        context['employee'] = employee
+        return context
 
 
 class UpdateChatBotPage(UpdateView):
@@ -67,6 +73,12 @@ class UpdateChatBotPage(UpdateView):
 
         form.add_error('token', 'Недействительный токен')
         return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateChatBotPage, self).get_context_data(**kwargs)
+        employee = Employee.objects.filter(user=self.request.user.id).first()
+        context['employee'] = employee
+        return context
 
 
 class DeleteChatBotPage(DeleteView):

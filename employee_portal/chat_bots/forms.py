@@ -6,13 +6,18 @@ from django import forms
 
 
 class ChatBotForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ChatBotForm, self).__init__(*args, **kwargs)
+        self.fields['botType'].empty_label = 'Выберите тип бота'
+
     class Meta:
         model = ChatBot
         fields = ('name', 'botType', 'token')
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'test'}),
-            'botType': forms.Select(choices=BotType.objects.all(), attrs={'class': 'test'}),
-            'token': forms.TextInput(attrs={'class': 'test'})
+            'name': forms.TextInput(attrs={'class': 'form_field', 'placeholder': 'Введите имя бота'}),
+            'botType': forms.Select(choices=BotType.objects.all(),
+                                    attrs={'class': 'form_field'}),
+            'token': forms.TextInput(attrs={'class': 'form_field', 'placeholder': 'Введите токен бота'})
         }
 
 
