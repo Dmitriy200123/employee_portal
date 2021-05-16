@@ -1,69 +1,3 @@
-html,
-body {
-    height: 100%;
-    width: 100%;
-}
-
-body {
-    font-style: normal;
-    margin: 0;
-}
-
-.grid_container {
-    display: grid;
-    grid-template-columns: 25% 75%;
-    grid-template-rows: 1fr;
-    height: 100%;
-}
-
-.nav {
-    list-style: none;
-}
-
-.nav_img {
-    display: inline-block;
-}
-
-.nav_button {
-    display: inline-block;
-    margin-left: auto;
-    float: right;
-}
-
-.nav-item {
-    display: inline-block;
-    margin-right: 50px;
-}
-
-a.nav-link {
-    color: #000000;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-}
-
-a.nav-link:hover {
-    color: #22B222;
-}
-
-.left_nav_bar {
-    margin-top: 7%;
-    margin-right: auto;
-    margin-left: auto;
-    font-size: 26px;
-    border-collapse: collapse;
-    border-spacing: 15px;
-    border-color: black;
-    background-color: #F5F5F5;
-    height: 100%;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
 .employee_info {
     display: grid;
     grid-template-columns: 35% 65%;
@@ -154,6 +88,7 @@ p {
     font-size: 22px;
     line-height: 27px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .edit_button:hover {
