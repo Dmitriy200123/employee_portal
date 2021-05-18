@@ -62,11 +62,7 @@ class UpdateOrCreateVacationPeriod(UpdateView):
         form.instance.employeeId = employee
         form.instance.vacationDays = (form.instance.endDateVacation - form.instance.startDateVacation).days
 
-        if form.instance.vacationDays <= 0:
-            form.add_error('endDateVacation', 'Неправильно выбрана дата окончания отпуска')
-
-        if form.instance.vacationDays > days_remainder.remainder:
-            form.add_error('vacationDays', 'Выбрано больше дней, чем осталось')
+        self.validate_date(form, days_remainder)
 
         if form.is_valid():
             days_remainder.remainder -= form.instance.vacationDays
@@ -74,6 +70,28 @@ class UpdateOrCreateVacationPeriod(UpdateView):
             return super().form_valid(form)
 
         return super().form_invalid(form)
+
+    def validate_date(self, form, days_remainder):
+        if form.instance.vacationDays <= 0:
+            form.add_error('endDateVacation', 'Неправильно выбрана дата окончания отпуска')
+
+        if form.instance.vacationDays > days_remainder.remainder:
+            form.add_error('vacationDays', 'Выбрано больше дней, чем осталось')
+
+        vacation_periods = self.model.objects.filter(employeeId=days_remainder.employee)
+
+        if vacation_periods:
+            if any(x for x in vacation_periods if self.check_date_intersection(form, x)):
+                form.add_error('startDateVacation',
+                               'Период отпуска пересекается с предыдущими периодамами')
+
+    @staticmethod
+    def check_date_intersection(form, vacation_period):
+        return form.instance.id != vacation_period.id and (
+                vacation_period.startDateVacation <= form.instance.startDateVacation <= vacation_period.endDateVacation
+                or vacation_period.startDateVacation <= form.instance.endDateVacation <= vacation_period.endDateVacation
+                or form.instance.startDateVacation <= vacation_period.startDateVacation <= form.instance.endDateVacation
+                or form.instance.startDateVacation <= vacation_period.endDateVacation <= form.instance.endDateVacation)
 
 
 class DeleteVacationPeriod(DeleteView):
