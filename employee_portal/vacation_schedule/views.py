@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.datetime_safe import datetime
 from django.views.generic import ListView, UpdateView, DeleteView
 
 # Create your views here.
@@ -16,8 +17,9 @@ class VacationListPage(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         employee = Employee.objects.filter(user=self.request.user.id).first()
+        current_year = datetime.now().year
 
-        return queryset.filter(employeeId=employee.id)
+        return queryset.filter(employeeId=employee.id, startDateVacation__year=current_year)
 
     def get_context_data(self, **kwargs):
         context = super(VacationListPage, self).get_context_data(**kwargs)
@@ -95,15 +97,3 @@ class DeleteVacationPeriod(DeleteView):
         days_remainder.save()
 
         return super(DeleteVacationPeriod, self).delete(request, *args, **kwargs)
-
-
-class VacationSchedulePage(ListView):
-    template_name = 'vacation_schedule/vacation_schedule_page.html'
-    model = EmployeeVacationPeriod
-    context_object_name = 'vacation_periods'
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        employee = Employee.objects.filter(user=self.request.user.id).first()
-
-        return queryset.filter(employeeId=employee.id)
