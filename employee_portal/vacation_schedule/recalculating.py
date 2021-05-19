@@ -10,16 +10,11 @@ from django.utils.datetime_safe import datetime
 from vacation_schedule.models import VacationScheduleParameters, DaysRemainder, EmployeeVacationPeriod
 
 
-def deleteVacationPeriodsByYear(days_remainder, year):
-    vacation_periods = EmployeeVacationPeriod.objects.filter(employeeId=days_remainder.employee,
+def deleteVacationPeriodsByYear(employee, year):
+    vacation_periods = EmployeeVacationPeriod.objects.filter(employeeId=employee,
                                                              startDateVacation__year=year)
     if vacation_periods:
-        for vacation_period in vacation_periods:
-            vacation_days = vacation_period.vacationDays
-            days_remainder.remainder += vacation_days
-            vacation_period.delete()
-
-        days_remainder.save()
+        [vacation_period.delete() for vacation_period in vacation_periods]
 
 
 def recalculationDaysRemainderForNewMax():
@@ -33,10 +28,12 @@ def recalculationDaysRemainderForNewMax():
 
     for days_remainder in DaysRemainder.objects.all():
         if difference < 0:
-            deleteVacationPeriodsByYear(days_remainder, datetime.now().year)
+            days_remainder.remainder = current_max_days
+            deleteVacationPeriodsByYear(days_remainder.employee, datetime.now().year)
 
         days_remainder.remainder += difference
         days_remainder.save()
+
     print('Перерасчет завершен')
 
 
@@ -50,7 +47,7 @@ def resetDaysRemainderForNewYear():
         year = int(year)
 
     for days_remainder in DaysRemainder.objects.all():
-        deleteVacationPeriodsByYear(days_remainder, year)
+        deleteVacationPeriodsByYear(days_remainder.employee, year)
         days_remainder.remainder = days_remainder.maxCountDays.maxCountDays
         days_remainder.save()
 
