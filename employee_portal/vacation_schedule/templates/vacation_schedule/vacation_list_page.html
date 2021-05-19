@@ -26,8 +26,5 @@
     {% endfor %}
 </ul>
 <p>Осталось дней: {{ days_remainder.remainder }}</p>
-<form method="get" action="{% url 'vacation_schedule:vacationSchedulePage' %}">
-    <input type="submit" value="Сохранить расписание">
-</form>
 </body>
 </html>

@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.datetime_safe import datetime
 from django.views.generic import ListView, UpdateView, DeleteView
 
 # Create your views here.
@@ -16,8 +17,9 @@ class VacationListPage(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         employee = Employee.objects.filter(user=self.request.user.id).first()
+        current_year = datetime.now().year
 
-        return queryset.filter(employeeId=employee.id)
+        return queryset.filter(employeeId=employee.id, startDateVacation__year=current_year)
 
     def get_context_data(self, **kwargs):
         context = super(VacationListPage, self).get_context_data(**kwargs)
@@ -60,11 +62,7 @@ class UpdateOrCreateVacationPeriod(UpdateView):
         form.instance.employeeId = employee
         form.instance.vacationDays = (form.instance.endDateVacation - form.instance.startDateVacation).days
 
-        if form.instance.vacationDays <= 0:
-            form.add_error('endDateVacation', 'Неправильно выбрана дата окончания отпуска')
-
-        if form.instance.vacationDays > days_remainder.remainder:
-            form.add_error('vacationDays', 'Выбрано больше дней, чем осталось')
+        self.validate_date(form, days_remainder)
 
         if form.is_valid():
             days_remainder.remainder -= form.instance.vacationDays
@@ -72,6 +70,28 @@ class UpdateOrCreateVacationPeriod(UpdateView):
             return super().form_valid(form)
 
         return super().form_invalid(form)
+
+    def validate_date(self, form, days_remainder):
+        if form.instance.vacationDays <= 0:
+            form.add_error('endDateVacation', 'Неправильно выбрана дата окончания отпуска')
+
+        if form.instance.vacationDays > days_remainder.remainder:
+            form.add_error('vacationDays', 'Выбрано больше дней, чем осталось')
+
+        vacation_periods = self.model.objects.filter(employeeId=days_remainder.employee)
+
+        if vacation_periods:
+            if any(x for x in vacation_periods if self.check_date_intersection(form, x)):
+                form.add_error('startDateVacation',
+                               'Период отпуска пересекается с предыдущими периодамами')
+
+    @staticmethod
+    def check_date_intersection(form, vacation_period):
+        return form.instance.id != vacation_period.id and (
+                vacation_period.startDateVacation <= form.instance.startDateVacation <= vacation_period.endDateVacation
+                or vacation_period.startDateVacation <= form.instance.endDateVacation <= vacation_period.endDateVacation
+                or form.instance.startDateVacation <= vacation_period.startDateVacation <= form.instance.endDateVacation
+                or form.instance.startDateVacation <= vacation_period.endDateVacation <= form.instance.endDateVacation)
 
 
 class DeleteVacationPeriod(DeleteView):
@@ -95,15 +115,3 @@ class DeleteVacationPeriod(DeleteView):
         days_remainder.save()
 
         return super(DeleteVacationPeriod, self).delete(request, *args, **kwargs)
-
-
-class VacationSchedulePage(ListView):
-    template_name = 'vacation_schedule/vacation_schedule_page.html'
-    model = EmployeeVacationPeriod
-    context_object_name = 'vacation_periods'
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        employee = Employee.objects.filter(user=self.request.user.id).first()
-
-        return queryset.filter(employeeId=employee.id)
