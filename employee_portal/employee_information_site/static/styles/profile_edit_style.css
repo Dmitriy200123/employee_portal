@@ -1,0 +1,178 @@
+.employee_edit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 3%;
+}
+
+.photo_round {
+    width: 80px;
+    height: 80px;
+    border-radius: 200px;
+    background: #EFEFEF;
+}
+
+.button_edit {
+    /*position: relative;*/
+    /*align-items: center;*/
+    /*text-align: center;*/
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 2px solid #28A228;
+    background: white;
+    color: #28A228;
+    padding: 14px 20px;
+    /*margin: 8px 0;*/
+    margin-left: 50%;
+
+    /*border: none;*/
+    cursor: pointer;
+    width: 50%;
+    /*height: 60px;*/
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    /*z-index: 1;*/
+}
+
+.edit {
+    /*position: relative;*/
+    /*text-align: center;*/
+    /*margin-left: 50%;*/
+    cursor: pointer;
+    color: #28A228;
+    width: 50%;
+    height: 60px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    /*z-index: 2;*/
+    /*margin-top: -12%;*/
+}
+
+.photo {
+    /*position: relative;*/
+    /*opacity: 0;*/
+    /*z-index: 3;*/
+}
+
+.button_save {
+    background-color: #28A228;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 6px;
+    grid-column: 1 / 2;
+    grid-row: 9 / 9;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 61px;
+}
+
+p{
+    color: #555555;
+}
+
+.name, .email, .num, .department, .position, .description {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 2px solid #CFCFCF;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border-radius: 6px;
+}
+
+.name:hover, .email:hover, .num:hover, .department:hover, .position:hover, .description:hover {
+    border: 2px solid #00AA00;
+}
+
+#employee .label {
+    width: 100%;
+    text-align: left;
+    color: black;
+   }
+
+.form_photo {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+}
+
+.form_fname {
+    grid-column: 1 / 1;
+    grid-row: 2 / 2;
+}
+
+.form_sname {
+    grid-column: 2 / 2;
+    grid-row: 2 / 2;
+}
+
+.form_patronymic {
+    grid-column: 1 / 1;
+    grid-row: 3 / 3;
+}
+
+.form_email {
+    grid-column: 1 / 1;
+    grid-row: 4 / 4;
+}
+
+.form_number {
+    grid-column: 2 / 2;
+    grid-row: 4 / 4;
+}
+
+.form_department {
+    grid-column: 1 / 3;
+    grid-row: 5 / 5;
+}
+
+.form_position {
+    grid-column: 1 / 3;
+    grid-row: 6 / 6;
+}
+
+.form_newemp {
+    grid-column: 1 / 3;
+    grid-row: 7 / 7;
+}
+
+.form_description {
+    grid-column: 1 / 3;
+    grid-row: 8 / 8;
+}
+
+
+/*.right_info {*/
+/*    display: grid;*/
+/*    grid-template-columns: 80%;*/
+/*    grid-template-rows: min-content min-content min-content min-content;*/
+/*    row-gap: 3%;*/
+/*    margin-top: 5%;*/
+/*}*/
+
+
+
+/*.left_info {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr;*/
+/*    grid-template-rows: min-content min-content;*/
+/*    justify-items: center;*/
+/*    row-gap: 3%;*/
+/*}*/

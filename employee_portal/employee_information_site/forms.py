@@ -15,12 +15,12 @@ class ProfileForm(ModelForm):
                   'is_new_employee']
         widgets = {
             'user': forms.HiddenInput(),
-            'photo': forms.ClearableFileInput(attrs={'class': 'edit'}),
-            'first_name': forms.TextInput(attrs={'class': 'edit'}),
-            'second_name': forms.TextInput(attrs={'class': 'edit'}),
-            'patronymic': forms.TextInput(attrs={'class': 'edit'}),
-            'email': forms.EmailInput(attrs={'class': 'edit'}),
-            'department': forms.Select(choices=CompanyDepartment.objects.all(), attrs={'class': 'edit'}),
-            'position': forms.Select(choices=EmployeePosition.objects.all(), attrs={'class': 'edit'}),
-            'description': forms.Textarea(attrs={'class': 'edit'}),
+            'photo': forms.ClearableFileInput(attrs={'class': 'photo'}),
+            'first_name': forms.TextInput(attrs={'class': 'first_name', 'placeholder': 'Введите имя'}),
+            'second_name': forms.TextInput(attrs={'class': 'second_name', 'placeholder': 'Введите фамилию'}),
+            'patronymic': forms.TextInput(attrs={'class': 'patronymic', 'placeholder': 'Введите отчество'}),
+            'email': forms.EmailInput(attrs={'class': 'email', 'placeholder': 'userr@gmail.com'}),
+            'department': forms.Select(choices=CompanyDepartment.objects.all(), attrs={'class': 'department', 'placeholder': 'Выберите отдел'}),
+            'position': forms.Select(choices=EmployeePosition.objects.all(), attrs={'class': 'position', 'placeholder': 'Выберите должность'}),
+            'description': forms.Textarea(attrs={'class': 'description', 'placeholder': 'Напишите что-нибудь о себе'}),
         }
