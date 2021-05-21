@@ -30,7 +30,7 @@ class PersonBase(models.Model):
     second_name = models.CharField(max_length=50, verbose_name='Фамилия')
     patronymic = models.CharField(max_length=50, verbose_name='Отчество')
     photo = models.ImageField(upload_to='employee_photos', default='skb_lab.jpg', verbose_name='Фотография')
-    email = models.EmailField()
+    email = models.EmailField(verbose_name='E-mail')
     phone_number = models.CharField(max_length=12, verbose_name='Номер телефона')
     description = models.TextField(blank=True, verbose_name='Описание')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,7 +44,7 @@ class Employee(PersonBase):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     department = models.ForeignKey(CompanyDepartment, null=True, on_delete=models.SET_NULL, verbose_name='Отдел')
     position = models.ForeignKey(EmployeePosition, null=True, on_delete=models.SET_NULL, verbose_name='Должность')
-    is_new_employee = models.BooleanField(verbose_name='Новый сотрудник')
+    is_new_employee = models.BooleanField(verbose_name='Я новый сотрудник')
 
     class Meta:
         ordering = ['department', 'position', 'first_name', 'second_name', 'patronymic']
