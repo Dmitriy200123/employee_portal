@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.datetime_safe import datetime
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
 
 # Create your views here.
 from employee_information_site.models import Employee
@@ -115,3 +115,8 @@ class DeleteVacationPeriod(DeleteView):
         days_remainder.save()
 
         return super(DeleteVacationPeriod, self).delete(request, *args, **kwargs)
+
+
+class EmployeeVacationPage(TemplateView):
+    template_name = 'vacation_schedule/employee_vacation_page.html'
+    model = EmployeeVacationPeriod
