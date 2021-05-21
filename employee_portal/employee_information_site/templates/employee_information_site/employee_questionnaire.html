@@ -10,21 +10,7 @@
 </head>
 <body>
 <header>
-    <div class="header_navbar_menu" id="navbarNav">
-        <ul class="nav">
-            <div class="nav_img">
-                <li class="nav-item_active">
-                    <a class="nav-link_active" href="https://www.skblab.ru/">
-                        <img src="{% static 'images/skb-lab.png' %}" width="149" height="42" alt="СКБ-Лаб"> </a>
-                </li>
-            </div>
-            <div class="nav_button">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authentication:logout' %}">Выход</a>
-                </li>
-            </div>
-        </ul>
-    </div>
+    {% include 'inc/_top_nav_bar.html' %}
 </header>
 
 <main class="grid_container">

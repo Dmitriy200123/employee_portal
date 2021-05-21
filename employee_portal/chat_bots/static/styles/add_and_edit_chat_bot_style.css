@@ -11,7 +11,7 @@ h1 {
     margin-top: 3.5%;
 }
 
-form{
+form {
     margin-top: 5%;
 }
 
@@ -22,11 +22,15 @@ form{
     border: 2px solid #CFCFCF;
     border-radius: 6px;
     width: 60%;
-    height: 63px;
-    padding-left: 12px;
-    text-size: 100px;
+    padding: 15px 20px;
     margin-top: 5px;
     margin-bottom: 25px;
+    font-weight: normal;
+    font-size: 22px;
+}
+
+.form_field:hover {
+    border-color: #00AA00;
 }
 
 label {
@@ -36,8 +40,8 @@ label {
     line-height: 27px;
 }
 
-button{
-   cursor: pointer;
+button {
+    cursor: pointer;
 }
 
 .save_bot_info {

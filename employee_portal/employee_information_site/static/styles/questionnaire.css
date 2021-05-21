@@ -109,8 +109,7 @@ label {
 
 .name, .email, .num, .department, .position, .description {
     width: 100%;
-    height: 63px;
-    padding: 12px 20px;
+    padding: 15px 20px;
     margin: 8px 0;
     border: 2px solid #CFCFCF;
     box-sizing: border-box;
@@ -125,7 +124,7 @@ label {
 }
 
 .name:hover, .email:hover, .num:hover, .department:hover, .position:hover, .description:hover {
-    border: 2px solid #00AA00;
+    border-color: #00AA00;
 }
 
 .form_fname {
