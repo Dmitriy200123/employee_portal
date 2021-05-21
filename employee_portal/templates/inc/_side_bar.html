@@ -21,12 +21,6 @@
     <div class="left_nav_item">
         <a class="left_nav_link" href="{% url 'vacation_schedule:vacationListPage' %}">График отпусков</a>
     </div>
-     <div class="left_nav_item">
-        <img src="/../media/left_nav_bar_image/calendar.png" alt="Календарь">
-    </div>
-    <div class="left_nav_item">
-        <a class="left_nav_link" href="{% url 'vacation_schedule:employeeVacationPage' %}">График отпусков сотрудников</a>
-    </div>
     <div class="left_nav_item">
         <img src="/../media/left_nav_bar_image/user.png" alt="Пользователь">
     </div>
@@ -34,6 +28,12 @@
         <a class="left_nav_link" href="{% url 'employeesListInformation' %}">Сотрудники</a>
     </div>
     {% if user.is_superuser %}
+        <div class="left_nav_item">
+            <img src="/../media/left_nav_bar_image/calendar.png" alt="Календарь">
+        </div>
+        <div class="left_nav_item">
+            <a class="left_nav_link" href="{% url 'vacation_schedule:employeeVacationPage' %}">График отпусков сотрудников</a>
+        </div>
         <div class="left_nav_item">
             <img src="/../media/left_nav_bar_image/messages.png" alt="Сообщения">
         </div>
