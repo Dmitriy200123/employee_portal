@@ -1,9 +1,9 @@
 <div class="left_nav_bar">
     <div class="left_nav_item">
-        <img src="/../media/{{ employee.photo }}" alt="Employee photo">
+        <img src="/../media/{{ user.photo }}" alt="User photo">
     </div>
     <div class="left_nav_item">
-        <a class="profile" href="{% url 'employee_information_site:profile' %}">{{ employee.first_name }}</a>
+        <a class="profile" href="{% url 'employee_information_site:profile' %}">{{ user.first_name }}</a>
     </div>
     <div class="left_nav_item">
         <img src="/../media/left_nav_bar_image/group.png" alt="Доступ">

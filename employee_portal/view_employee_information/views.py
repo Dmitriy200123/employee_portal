@@ -65,14 +65,13 @@ class EmployeeInformationPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         user = 'user'
-        employee = None
         parameters = self.request.GET
-
         if user in parameters and parameters[user].isdigit():
             employee = Employee.objects.filter(user=parameters[user]).first()
             if employee is not None:
                 context = super().get_context_data(**kwargs)
                 context['employee'] = employee
+                context['user'] = Employee.objects.filter(user=self.request.user).first()
                 return context
         raise Http404
 
