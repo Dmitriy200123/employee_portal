@@ -98,4 +98,4 @@ class FilterTesting(MainTest):
 
     def test_cant_view_details_of_dont_exists_user(self):
         response = self.client.get('/employees_information/employee/?user=999')
-        self.assertContains(response, 'Not found')
+        self.assertEqual(response.status_code, 404)

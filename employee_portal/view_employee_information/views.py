@@ -2,7 +2,7 @@ from django.views.generic import ListView, TemplateView
 from employee_information_site.models import Employee
 from view_employee_information.forms import FilterForm
 from django.db.models import Q
-
+from django.shortcuts import Http404
 
 # Create your views here.
 
@@ -70,7 +70,12 @@ class EmployeeInformationPage(TemplateView):
 
         if user in parameters and parameters[user].isdigit():
             employee = Employee.objects.filter(user=parameters[user]).first()
+            if employee is not None:
+                context = super().get_context_data(**kwargs)
+                context['employee'] = employee
+                return context
+        raise Http404
 
-        context = super().get_context_data(**kwargs)
-        context['employee'] = employee
-        return context
+
+
+
