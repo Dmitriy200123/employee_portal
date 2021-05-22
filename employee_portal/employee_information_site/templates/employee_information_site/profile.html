@@ -18,14 +18,14 @@
 {% block right_content %}
     <div class="employee_info">
         <div class="left_info">
-            <img src="{{ user.photo.url }}" alt="photo">
+            <img src="{{ current_user.photo.url }}" alt="photo">
             <form class="edit_form" action="{% url 'employee_information_site:profile_edit' %}">
                 <button type="submit" class="edit_button">Редактировать</button>
             </form>
         </div>
         <div class="right_info">
             <div>
-                <h1>{{ user.first_name }} {{ user.patronymic }} {{ user.second_name }}</h1>
+                <h1>{{ current_user.first_name }} {{ current_user.patronymic }} {{ current_user.second_name }}</h1>
             </div>
 
             <div class="main_info">
@@ -34,12 +34,12 @@
                 </div>
                 <div class="department">
                     <h3>Отдел</h3>
-                    <p>{{ user.department }}</p>
+                    <p>{{ current_user.department }}</p>
                 </div>
 
                 <div class="position">
                     <h3>Должность</h3>
-                    <p>{{ user.position }}</p>
+                    <p>{{ current_user.position }}</p>
                 </div>
             </div>
 
@@ -49,22 +49,22 @@
                 </div>
                 <div class="email">
                     <h3>Email</h3>
-                    <p>{{ user.email }}</p>
+                    <p>{{ current_user.email }}</p>
                 </div>
 
                 <div class="phone_number">
                     <h3>Телефон</h3>
-                    <p>{{ user.phone_number }}</p>
+                    <p>{{ current_user.phone_number }}</p>
                 </div>
             </div>
 
-            {% if user.description %}
+            {% if current_user.description %}
                 <div class>
                     <h2>Дополнительно</h2>
 
                     <div class="description_info">
                         <h3>О себе </h3>
-                        <p>{{ user.description }}</p>
+                        <p>{{ current_user.description }}</p>
                     </div>
                 </div>
             {% endif %}

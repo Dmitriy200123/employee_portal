@@ -24,7 +24,7 @@ class ProfilePageView(TemplateView):
         if not current_user:
             return redirect('employee_information_site:profile_edit')
 
-        context = {'user': current_user.first()}
+        context = {'current_user': current_user.first()}
         return render(request, self.template_name, context)
 
 

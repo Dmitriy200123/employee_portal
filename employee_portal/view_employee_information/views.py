@@ -71,7 +71,7 @@ class EmployeeInformationPage(TemplateView):
             if employee is not None:
                 context = super().get_context_data(**kwargs)
                 context['employee'] = employee
-                context['user'] = Employee.objects.filter(user=self.request.user).first()
+                context['current_user'] = Employee.objects.filter(user=self.request.user).first()
                 return context
         raise Http404
 
