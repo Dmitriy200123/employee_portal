@@ -1,8 +1,6 @@
-from django.contrib.auth.models import AnonymousUser, User
-from django.test import RequestFactory, TestCase, Client
-from django.template.response import TemplateResponse
+from django.contrib.auth.models import User
+from django.test import TestCase, Client
 from employee_information_site.models import Employee, CompanyDepartment, EmployeePosition
-from .views import EmployeeInformationPage
 
 
 # Create your tests here.
