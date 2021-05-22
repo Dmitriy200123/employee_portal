@@ -1,7 +1,9 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, HttpResponse
 from django.urls import reverse_lazy
 from django.utils.datetime_safe import datetime
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, TemplateView
+import xlwt
+import os
 
 # Create your views here.
 from employee_information_site.models import Employee
@@ -115,3 +117,30 @@ class DeleteVacationPeriod(DeleteView):
         days_remainder.save()
 
         return super(DeleteVacationPeriod, self).delete(request, *args, **kwargs)
+
+
+class EmployeeVacationPage(TemplateView):
+    template_name = 'vacation_schedule/employee_vacation_page.html'
+
+
+def export_vacation_xls(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="users.xls"'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Users')
+
+    row_num = 0
+
+    columns = [field.name for field in EmployeeVacationPeriod._meta.get_fields()][1:]
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num])
+
+    rows = EmployeeVacationPeriod.objects.all()
+    for row_object in rows:
+        row_num += 1
+        for col_num, value in enumerate(columns):
+            ws.write(row_num, col_num, str(getattr(row_object, value)))
+
+    wb.save(response)
+    return response
