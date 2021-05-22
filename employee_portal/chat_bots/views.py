@@ -76,8 +76,8 @@ class UpdateChatBotPage(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(UpdateChatBotPage, self).get_context_data(**kwargs)
-        employee = Employee.objects.filter(user=self.request.user.id).first()
-        context['employee'] = employee
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
         return context
 
 
@@ -121,6 +121,12 @@ class UpdateOrCreateSenderPage(UpdateView):
     def form_valid(self, form):
         SenderBots.updateBots()
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateOrCreateSenderPage, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
 
 
 class SendMessageView(FormView):

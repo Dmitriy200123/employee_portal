@@ -24,11 +24,11 @@ class ChatBot(models.Model):
 
 class Sender(models.Model):
     newEmployeeChatBot = models.ForeignKey(ChatBot, related_name='%(class)s_new_employee_chat_bot',
-                                           on_delete=models.CASCADE, verbose_name="Бот нового сотрудника")
-    newEmployeeChannelId = models.CharField(max_length=50, verbose_name="Id канала о новом сотруднике")
+                                           on_delete=models.CASCADE, verbose_name="Бот для уведомлений о новом сотруднике")
+    newEmployeeChannelId = models.CharField(max_length=50, verbose_name="Id канала для уведомлений о новом сотруднике")
     accessRequestChatBot = models.ForeignKey(ChatBot, related_name='%(class)s_access_request_chat_bot',
-                                             on_delete=models.CASCADE, verbose_name="Бот доступа к сервисам")
-    accessRequestChannelId = models.CharField(max_length=50, verbose_name="Id канала о запросе доступа")
+                                             on_delete=models.CASCADE, verbose_name="Бот для запроса доступа к сервисам")
+    accessRequestChannelId = models.CharField(max_length=50, verbose_name="Id канала для запроса доступа к сервисам")
     sendTime = models.TimeField(verbose_name="Время отправки")
 
     def __str__(self):

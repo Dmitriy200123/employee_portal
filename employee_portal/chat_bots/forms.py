@@ -22,16 +22,21 @@ class ChatBotForm(forms.ModelForm):
 
 
 class SenderForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SenderForm, self).__init__(*args, **kwargs)
+        self.fields['newEmployeeChatBot'].empty_label = 'Выберите бота'
+        self.fields['accessRequestChatBot'].empty_label = 'Выберите бота'
+
     class Meta:
         model = Sender
         fields = ('newEmployeeChatBot', 'newEmployeeChannelId', 'accessRequestChatBot', 'accessRequestChannelId',
                   'sendTime')
         widgets = {
-            'newEmployeeChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
-            'newEmployeeChannelId': forms.TextInput(attrs={'class': 'можно менять'}),
-            'accessRequestChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
-            'accessRequestChannelId': forms.TextInput(attrs={'class': 'можно менять'}),
-            'sendTime': forms.TimeInput(attrs={'type': 'time', 'step': '60', 'class': 'можно менять'})
+            'newEmployeeChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'setting_parameter'}),
+            'newEmployeeChannelId': forms.TextInput(attrs={'class': 'setting_parameter', 'placeholder': '@channel'}),
+            'accessRequestChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'setting_parameter'}),
+            'accessRequestChannelId': forms.TextInput(attrs={'class': 'setting_parameter', 'placeholder': '@channel'}),
+            'sendTime': forms.TimeInput(attrs={'type': 'time', 'step': '60', 'class': 'setting_parameter'})
         }
 
 
