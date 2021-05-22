@@ -109,7 +109,7 @@ label {
 
 .name, .email, .num, .department, .position, .description {
     width: 100%;
-    padding: 15px 20px;
+    padding: 10px 20px;
     margin: 8px 0;
     border: 2px solid #CFCFCF;
     box-sizing: border-box;

@@ -22,7 +22,7 @@ form {
     border: 2px solid #CFCFCF;
     border-radius: 6px;
     width: 60%;
-    padding: 15px 20px;
+    padding: 10px 20px;
     margin-top: 5px;
     margin-bottom: 25px;
     font-weight: normal;
@@ -43,6 +43,7 @@ label {
 button {
     cursor: pointer;
     overflow: hidden;
+    padding: 14px 0;
 }
 
 .save_bot_info {
@@ -50,7 +51,6 @@ button {
     border: 2px solid #00AA00;
     border-radius: 6px;
     width: 27%;
-    height: 63px;
     color: white;
     font-size: 22px;
     float: left;
@@ -58,7 +58,6 @@ button {
 
 .delete_bot {
     width: 17%;
-    height: 63px;
     font-weight: 600;
     font-size: 22px;
     line-height: 27px;
