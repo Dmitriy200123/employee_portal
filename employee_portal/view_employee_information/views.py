@@ -73,4 +73,5 @@ class EmployeeInformationPage(TemplateView):
 
         context = super().get_context_data(**kwargs)
         context['employee'] = employee
+        context['user'] = Employee.objects.filter(user=self.request.user).first()
         return context

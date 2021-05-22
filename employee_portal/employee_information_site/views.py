@@ -19,12 +19,12 @@ class ProfilePageView(TemplateView):
     template_name = 'employee_information_site/profile.html'
 
     def get(self, request, *args, **kwargs):
-        employee = Employee.objects.filter(user=request.user.id)
+        current_user = Employee.objects.filter(user=request.user.id)
 
-        if not employee:
+        if not current_user:
             return redirect('employee_information_site:profile_edit')
 
-        context = {'employee': employee.first()}
+        context = {'user': current_user.first()}
         return render(request, self.template_name, context)
 
 
