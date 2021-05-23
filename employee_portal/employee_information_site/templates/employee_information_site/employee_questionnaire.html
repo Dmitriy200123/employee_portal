@@ -24,6 +24,7 @@
 
     <div class="profile_data">
         <h1>Анкета сотрудника</h1>
+        {{ form.errors }}
         <form method="post" enctype="multipart/form-data" id="employee">
             {% csrf_token %}
             <div class="container">
