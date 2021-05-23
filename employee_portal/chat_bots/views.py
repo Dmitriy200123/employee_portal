@@ -142,3 +142,9 @@ class SendMessageView(FormView):
         else:
             form.add_error('date', response['Message'])
             return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(SendMessageView, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context

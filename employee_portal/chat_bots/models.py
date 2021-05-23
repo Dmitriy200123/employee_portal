@@ -29,15 +29,15 @@ class Sender(models.Model):
     accessRequestChatBot = models.ForeignKey(ChatBot, related_name='%(class)s_access_request_chat_bot',
                                              on_delete=models.CASCADE, verbose_name="Бот для запроса доступа к сервисам")
     accessRequestChannelId = models.CharField(max_length=50, verbose_name="Id канала для запроса доступа к сервисам")
-    sendTime = models.TimeField(verbose_name="Время отправки")
+    sendTime = models.TimeField(default=datetime.datetime.now().replace(second=0, microsecond=0), verbose_name="Время отправки")
 
     def __str__(self):
         return f'{self.newEmployeeChatBot}, {self.accessRequestChatBot}'
 
 
 class MessageToSend(models.Model):
-    channel = models.CharField(max_length=50)
-    message = models.CharField(max_length=50)
-    date = models.DateField(default=datetime.date.today)
-    time = models.TimeField(default=datetime.datetime.now().replace(second=0, microsecond=0))
-    bot = models.ForeignKey(ChatBot, on_delete=models.CASCADE)
+    channel = models.CharField(max_length=50, verbose_name='Id канала')
+    message = models.CharField(max_length=50, verbose_name='Текст сообщения')
+    date = models.DateField(default=datetime.date.today, verbose_name='Дата отправки')
+    time = models.TimeField(default=datetime.datetime.now().replace(second=0, microsecond=0), verbose_name='Время отправки')
+    bot = models.ForeignKey(ChatBot, on_delete=models.CASCADE, verbose_name='Бот')

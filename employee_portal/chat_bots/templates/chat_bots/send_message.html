@@ -1,15 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Send Message</title>
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        {{form}}
-        <input type="submit" name="submit" value="Send">
-    </form>
-<p>{{ error }}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Отправка сообщения
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/send_message_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="right_content">
+        <h1>
+            Отправить сообщение
+        </h1>
+        <form method="post" class="message_sending_form">
+            {% csrf_token %}
+            <div class="bot_info">
+                {{ form.bot.label_tag }}
+                {{ form.bot }}
+            </div>
+
+            <div class="channel_info">
+                {{ form.channel.label_tag }}
+                {{ form.channel }}
+            </div>
+
+            <div class="date_info">
+                {{ form.date.label_tag }}
+                {{ form.date }}
+            </div>
+
+            <div class="time_info">
+                {{ form.time.label_tag }}
+                {{ form.time }}
+            </div>
+
+            <div class="message_info">
+                {{ form.message.label_tag }}
+                {{ form.message }}
+            </div>
+            <button class="sending_button" type="submit"> Отправить</button>
+        </form>
+        <p>{{ error }}</p>
+    </div>
+{% endblock %}
