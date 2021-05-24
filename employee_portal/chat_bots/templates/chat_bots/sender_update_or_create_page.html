@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Изменение настроек отправки уведомлений
+    Редактирование настроек отправки уведомлений
 {% endblock %}
 
 {% block load_styles %}
@@ -15,7 +15,7 @@
 
 {% block right_content %}
     <div class="edited_sender_settings">
-        <h1> Изменение настроек отправки уведомлений </h1>
+        <h1> Редактировать настройки отправки уведомлений </h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}

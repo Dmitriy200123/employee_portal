@@ -108,6 +108,12 @@ class SenderSettingPage(ListView):
 
         return redirect('chatBots:updateSender')
 
+    def get_context_data(self, **kwargs):
+        context = super(SenderSettingPage, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
+
 
 class UpdateOrCreateSenderPage(UpdateView):
     model = Sender

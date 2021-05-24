@@ -1,43 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Настройка отправки уведомлений</title>
-</head>
-<body>
-<header>
-    <p><a href="{% url 'employee_information_site:home_page' %}">На главную</a></p>
-</header>
+{% extends 'base.html' %}
+{% load static %}
 
-<p>
-    <label for="id_newEmployeeChatBot">Бот нового сотрудника:</label>
-    <input type="text" readonly name="newEmployeeChatBot" value="{{ sender.newEmployeeChatBot }}"
-           id="id_newEmployeeChatBot">
-</p>
-<p>
-    <label for="id_newEmployeeChannelId">Id канала о новом сотруднике:</label>
-    <input type="text" readonly name="newEmployeeChannelId" value="{{ sender.newEmployeeChannelId }}"
-           id="id_newEmployeeChannelId">
-</p>
+{% block title %}
+    Настройки отправки уведомлений
+{% endblock %}
 
-<p>
-    <label for="id_accessRequestChatBot">Бот доступа к сервисам:</label>
-    <input type="text" readonly name="accessRequestChatBot" value="{{ sender.accessRequestChatBot }}"
-           id="id_accessRequestChatBot">
-</p>
-<p>
-    <label for="id_accessRequestChannelId">Id канала о запросе доступа:</label>
-    <input type="text" readonly name="accessRequestChannelId" value="{{ sender.accessRequestChannelId }}"
-           id="id_accessRequestChannelId">
-</p>
-<p>
-    <label for="id_sendTime">Время отправки:</label>
-    <input type="text" readonly name="sendTime" value="{{ sender.sendTime }}" id="id_sendTime">
-</p>
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/sender_setting_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
 
-<form action="{% url 'chatBots:updateSender' %}">
-    <input type="submit" value="Редактировать">
-</form>
+{% block right_content %}
+    <div class="right_content">
+        <h1>
+            Настройки отправки уведомлений
+        </h1>
 
-</body>
-</html>
+        <div class="sender_settings">
+            <div class="setting_parameter">
+                <label>Бот для уведомлений о новом сотруднике:</label>
+                <span>{{ sender.newEmployeeChatBot }}</span>
+            </div>
+
+            <div class="setting_parameter">
+                <label>Id канала для уведомлений о новом сотруднике:</label>
+                <span>{{ sender.newEmployeeChannelId }}</span>
+            </div>
+
+            <div class="setting_parameter">
+                <label>Бот для запроса доступа к сервисам:</label>
+                <span>{{ sender.accessRequestChatBot }}</span>
+            </div>
+
+            <div class="setting_parameter">
+                <label>Id канала для запроса доступа к сервисам:</label>
+                <span>{{ sender.accessRequestChannelId }}</span>
+            </div>
+
+            <div class="setting_parameter">
+                <label>Время отправки:</label>
+                <span>{{ sender.sendTime }}</span>
+            </div>
+
+            <form action="{% url 'chatBots:updateSender' %}">
+                <button type="submit"> Редактировать</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
