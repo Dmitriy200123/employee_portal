@@ -46,21 +46,23 @@ class SenderBots:
 
     @staticmethod
     def sendNewEmployeeMessage(data):
-        message = f"Новый сотрудник: {data['first_name']} {data['second_name']}. Отдел: {data['department']}," \
-                  f" должность: {data['position']}"
+        if SenderBots.new_employee_chat_bot:
+            message = f"Новый сотрудник: {data['first_name']} {data['second_name']}. Отдел: {data['department']}," \
+                      f" должность: {data['position']}"
 
-        correct_time = SenderBots.getCorrectTime()
+            correct_time = SenderBots.getCorrectTime()
 
-        SenderBots.new_employee_chat_bot.post_scheduled_message(date=correct_time, message=message,
-                                                                channel_id=SenderBots.new_employee_channel_id)
+            SenderBots.new_employee_chat_bot.post_scheduled_message(date=correct_time, message=message,
+                                                                    channel_id=SenderBots.new_employee_channel_id)
 
     @staticmethod
     def sendAccessEmployeeMessage(user, services):
-        message = f"{user.first_name} {user.second_name} запрашивает доступ к следующим сервисам: {', '.join(services)}"
-        correct_time = SenderBots.getCorrectTime()
+        if SenderBots.access_request_chat_bot:
+            message = f"{user.first_name} {user.second_name} запрашивает доступ к следующим сервисам: {', '.join(services)}"
+            correct_time = SenderBots.getCorrectTime()
 
-        SenderBots.access_request_chat_bot.post_scheduled_message(date=correct_time, message=message,
-                                                        channel_id=SenderBots.new_employee_channel_id)
+            SenderBots.access_request_chat_bot.post_scheduled_message(date=correct_time, message=message,
+                                                                      channel_id=SenderBots.new_employee_channel_id)
 
 
 if Sender.objects.first():

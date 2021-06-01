@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'employee_portal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_name',
-        'USER': 'user_name',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'NAME': 'd5viacuvecooe0',
+        'USER': 'rlirgoiquqggaz',
+        'PASSWORD': 'f6e627d5f25ffcc2c7d5cd78f3bfa2edcac75f1b70ea2d423dd6a13083ef0b16',
+        'HOST': 'ec2-54-91-188-254.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
