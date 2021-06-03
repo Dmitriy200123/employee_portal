@@ -49,7 +49,7 @@ class AddChatBotPage(CreateView):
     def get_context_data(self, **kwargs):
         context = super(AddChatBotPage, self).get_context_data(**kwargs)
         employee = Employee.objects.filter(user=self.request.user.id).first()
-        context['employee'] = employee
+        context['current_user'] = employee
         return context
 
 
