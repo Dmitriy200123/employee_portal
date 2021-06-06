@@ -1,14 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Сохранить">
-</form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {% if vacation_period %}
+        Изменить период отпуска
+    {% else %}
+        Добавить период отпуска
+    {% endif %}
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/add_vacation_period_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="right_content">
+        <h1>
+            {% if vacation_period %}
+                Изменить период отпуска
+            {% else %}
+                Добавить период отпуска
+            {% endif %}
+        </h1>
+        <form method="post" class="add_vacation_period_form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="save_button" type="submit"> Сохранить</button>
+        </form>
+        {% if vacation_period %}
+            <form method="post" action="{% url 'vacation_schedule:deleteVacation' vacation_period.id %}">
+                {% csrf_token %}
+                <button class="delete_button" type="submit"> Удалить период </button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -13,6 +13,6 @@ class VacationPeriodForm(forms.ModelForm):
         widgets = {
             'employeeId': forms.HiddenInput,
             'vacationDays': forms.HiddenInput,
-            'startDateVacation': forms.SelectDateWidget(years=range(current_year, current_year + 1)),
-            'endDateVacation': forms.SelectDateWidget(years=range(current_year, current_year + 1))
+            'startDateVacation': forms.DateInput(attrs={'type': 'date', 'class': 'vacation_date start_date'}),
+            'endDateVacation': forms.DateInput(attrs={'type': 'date', 'class': 'vacation_date end_date'})
         }

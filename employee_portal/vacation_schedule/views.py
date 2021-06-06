@@ -33,7 +33,7 @@ class UpdateOrCreateVacationPeriod(UpdateView):
     form_class = VacationPeriodForm
     template_name = 'vacation_schedule/add_vacation_page.html'
     success_url = reverse_lazy('vacation_schedule:vacationListPage')
-    context_object_name = 'form'
+    context_object_name = 'vacation_period'
 
     def get_object(self, **kwargs):
         vacation_id = self.kwargs.get('id')
@@ -84,6 +84,12 @@ class UpdateOrCreateVacationPeriod(UpdateView):
             if any(x for x in vacation_periods if self.check_date_intersection(form, x)):
                 form.add_error('startDateVacation',
                                'Период отпуска пересекается с предыдущими периодамами')
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateOrCreateVacationPeriod, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
 
     @staticmethod
     def check_date_intersection(form, vacation_period):
