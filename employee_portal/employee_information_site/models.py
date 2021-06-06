@@ -28,7 +28,7 @@ class EmployeePosition(models.Model):
 class PersonBase(models.Model):
     first_name = models.CharField(max_length=50, verbose_name='Имя')
     second_name = models.CharField(max_length=50, verbose_name='Фамилия')
-    patronymic = models.CharField(max_length=50, verbose_name='Отчество')
+    patronymic = models.CharField(max_length=50, verbose_name='Отчество', blank=True)
     photo = models.ImageField(upload_to='employee_photos', default='skb_lab.jpg', verbose_name='Фотография')
     email = models.EmailField(verbose_name='E-mail')
     phone_number = models.CharField(max_length=12, verbose_name='Номер телефона')
