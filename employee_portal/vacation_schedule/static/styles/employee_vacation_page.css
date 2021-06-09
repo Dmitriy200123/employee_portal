@@ -1,0 +1,41 @@
+.right_content {
+    margin-left: 5%;
+}
+
+h1 {
+    margin-top: 5%;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 61px;
+}
+
+.vacation_schedule > img{
+    width: 55%;
+    height: auto;
+}
+
+.vacation_schedule{
+    display: grid;
+    grid-template-columns: 90%;
+    grid-template-rows: auto;
+    justify-items: center;
+}
+
+.button_form{
+    width: 30%;
+}
+
+.export_button{
+    width: 100%;
+    background-color: #28A228;
+    color: white;
+    padding: 14px 20px;;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 27px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 6px;
+}

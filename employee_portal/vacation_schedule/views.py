@@ -127,6 +127,12 @@ class DeleteVacationPeriod(DeleteView):
 class EmployeeVacationPage(TemplateView):
     template_name = 'vacation_schedule/employee_vacation_page.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeVacationPage, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
+
 
 class ExportVacationXlsView(DetailView):
     def get(self, request, *args, **kwargs):
