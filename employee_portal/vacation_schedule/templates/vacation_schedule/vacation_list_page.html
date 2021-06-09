@@ -1,26 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<header>
-    <a href="{% url 'vacation_schedule:addVacation' %}">Добавить период отпуска</a>
-</header>
-<h1>Список периодов</h1>
-<ul>
-    {% for vacation in vacation_periods %}
-        <li>
-            <p>
-                <a href="{% url 'vacation_schedule:updateVacation' vacation.id %}">{{ vacation }}</a>
-            </p>
-            <p>{{ vacation.startDateVacation }}</p>
-            <p>{{ vacation.endDateVacation }}</p>
-            <p>Дней отпуска: {{ vacation.vacationDays }}</p>
-        </li>
-    {% endfor %}
-</ul>
-<p>Осталось дней: {{ days_remainder.remainder }}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Периоды отпуска
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/vacation_list_page_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="right_content">
+        <h1>
+            Периоды отпуска
+        </h1>
+        <div class="vacation_add_grid">
+        <form class="button_form" action="{% url 'vacation_schedule:addVacation' %}">
+            <button class="add_new_period" type="submit"> Добавить период </button>
+        </form>
+            <p class="days_remainder">Свободных для отпуска дней: <span>{{ days_remainder.remainder }}</span></p>
+        </div>
+        {% for vacation in vacation_periods %}
+            <div class="vacation_period_info">
+                <p class="period"><a
+                        href="{% url 'vacation_schedule:updateVacation' vacation.id %}">{{ vacation.startDateVacation }}
+                    - {{ vacation.endDateVacation }}</a></p>
+                <p class="vacation_days">Дней отпуска: {{ vacation.vacationDays }}</p>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

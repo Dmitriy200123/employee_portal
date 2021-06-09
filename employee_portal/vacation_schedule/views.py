@@ -24,6 +24,7 @@ class VacationListPage(ListView):
     def get_context_data(self, **kwargs):
         context = super(VacationListPage, self).get_context_data(**kwargs)
         employee = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = employee
         context['days_remainder'] = DaysRemainder.objects.filter(employee=employee).first()
         return context
 
