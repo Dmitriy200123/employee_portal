@@ -15,25 +15,26 @@
 {% endblock %}
 
 {% block right_content %}
-    <div >
+    <div>
         <h1>Настройка чат-ботов</h1>
         <div class="container">
-             {% if object_list %}
-            {% for chatBot in object_list %}
-                {% if chatBot.botType.messenger_type == "telegram" %}
-                    <p>
-                        <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}" > <img
-                                src="/../../media/chat_bot/new_tg.png">{{ chatBot.botType }}: {{ chatBot.name }}</a>
-                    </p>
-                {% elif chatBot.botType.messenger_type == "slack" %}
-                    <p>
-                        <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
-                                src="/../../media/chat_bot/new_vk.png">{{ chatBot.botType }}: {{ chatBot.name }}</a>
-                    </p>
-                {% endif %}
-            {% endfor %}
-            <p><a href="{% url 'chatBots:addChatBots' %}"> <img src="/../../media/chat_bot/new_plus.png">Добавить чат-бота</a></p>
-        {% endif %}
+            {% if object_list %}
+                {% for chatBot in object_list %}
+                    {% if chatBot.botType.messenger_type == "telegram" %}
+                        <p>
+                            <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
+                                    src="/../../media/chat_bot/new_tg.png">{{ chatBot.name }}</a>
+                        </p>
+                    {% elif chatBot.botType.messenger_type == "slack" %}
+                        <p>
+                            <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
+                                    src="/../../media/chat_bot/new_vk.png">{{ chatBot.name }}</a>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <p><a href="{% url 'chatBots:addChatBots' %}"> <img src="/../../media/chat_bot/new_plus.png">Добавить
+                чат-бота</a></p>
         </div>
 
     </div>
