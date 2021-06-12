@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block title %}
-    Редактировать профиль
+    Профиль
 {% endblock %}
 
 {% block load_styles %}
-{#    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile_edit_style.css' %}">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile_edit_style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
@@ -15,65 +15,66 @@
 {% endblock %}
 
 {% block right_content %}
+    <div>
     <h1>Редактировать профиль</h1>
-<div class="employee_edit">
-    <div class="form_photo">
-        <label class="label"><strong>Фото профиля</strong></label>
-        <img src="{% static 'styles/profile.png' %}" alt="profile" class="photo_round">
-        <div class="button_edit">
-            {{ form.photo }}
+    <div class="employee_edit">
+        <div class="form_photo">
+            <label class="label"><strong>Фото профиля</strong></label>
+            <img src="{% static 'styles/profile.png' %}" alt="profile" class="photo_round">
+{#            <div class="button_edit">#}
+{#                {{ form.photo }}#}
+{#            </div>#}
+{#            <div class="edit_p">#}
+{#                <p style="color:#28A228">Изменить</p>#}
+{#            </div>#}
+                <div class="button_edit">
+                    {{ form.photo }}
+                <button disabled>Изменить</button>
         </div>
-        <div class="edit">
-            <p style="color:#28A228">Изменить</p>
         </div>
-    </div>
 
-    <div class="form_fname">
-        <label class="label"><strong>Имя</strong></label>
-        {{ form.first_name }}
-    </div>
+        <div class="form_fname">
+            <label class="label"><strong>Имя</strong></label>
+            {{ form.first_name }}
+        </div>
 
-    <div class="form_sname">
-        <label class="label"><strong>Фамилия</strong></label>
-        {{ form.second_name }}
-    </div>
+        <div class="form_sname">
+            <label class="label"><strong>Фамилия</strong></label>
+            {{ form.second_name }}
+        </div>
 
-    <div class="form_patronymic">
-        <label class="label"><strong>Отчество</strong> (если есть)</label>
-        {{ form.patronymic }}
-    </div>
+        <div class="form_patronymic">
+            <label class="label"><strong>Отчество</strong> (если есть)</label>
+            {{ form.patronymic }}
+        </div>
 
-    <div class="form_email">
-        <label class="label"><strong>E-mail</strong></label>
-        {{ form.email }}
-    </div>
+        <div class="form_email">
+            <label class="label"><strong>E-mail</strong></label>
+            {{ form.email }}
+        </div>
 
-    <div class="form_number">
-        <label class="label"><strong>Телефон</strong></label>
-        {{ form.phone_number }}
-    </div>
+        <div class="form_number">
+            <label class="label"><strong>Телефон</strong></label>
+            {{ form.phone_number }}
+        </div>
 
-    <div class="form_department">
-        <label class="label"><strong>Отдел</strong></label>
-        {{ form.department }}
-    </div>
+        <div class="form_department">
+            <label class="label"><strong>Отдел</strong></label>
+            {{ form.department }}
+        </div>
 
-    <div class="form_position">
-        <label class="label"><strong>Должность</strong></label>
-        {{ form.position }}
-    </div>
+        <div class="form_position">
+            <label class="label"><strong>Должность</strong></label>
+            {{ form.position }}
+        </div>
 
-    <div class="form_newemp">
-        <label class="label"><strong>Я новый сотрудник</strong></label>
-        {{ form.is_new_employee }}
-    </div>
+        <div class="form_description">
+            <label class="label"><strong>Дополнительная информация</strong> (необязательно)</label>
+            <p>Владение языками, личные качества, навыки, достижения</p>
+            {{ form.description }}
+        </div>
 
-    <div class="form_description">
-        <label class="label"><strong>Дополнительная информация</strong> (необязательно)</label>
-        <p>Владение языками, личные качества, навыки, достижения</p>
-        {{ form.description }}
+        <button type="submit" class="button_save">Сохранить</button>
     </div>
-
-    <button type="submit" class="button_save">Сохранить</button>
-</div>
+    </div>
 {% endblock %}
