@@ -22,27 +22,39 @@ class ChatBotForm(forms.ModelForm):
 
 
 class SenderForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SenderForm, self).__init__(*args, **kwargs)
+        self.fields['newEmployeeChatBot'].empty_label = 'Выберите бота'
+        self.fields['accessRequestChatBot'].empty_label = 'Выберите бота'
+
     class Meta:
         model = Sender
         fields = ('newEmployeeChatBot', 'newEmployeeChannelId', 'accessRequestChatBot', 'accessRequestChannelId',
                   'sendTime')
         widgets = {
-            'newEmployeeChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
-            'newEmployeeChannelId': forms.TextInput(attrs={'class': 'можно менять'}),
-            'accessRequestChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'можно менять'}),
-            'accessRequestChannelId': forms.TextInput(attrs={'class': 'можно менять'}),
-            'sendTime': forms.TimeInput(attrs={'type': 'time', 'step': '60', 'class': 'можно менять'})
+            'newEmployeeChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'setting_parameter'}),
+            'newEmployeeChannelId': forms.TextInput(attrs={'class': 'setting_parameter', 'placeholder': '@channel'}),
+            'accessRequestChatBot': forms.Select(choices=ChatBot.objects.all(), attrs={'class': 'setting_parameter'}),
+            'accessRequestChannelId': forms.TextInput(attrs={'class': 'setting_parameter', 'placeholder': '@channel'}),
+            'sendTime': forms.TimeInput(attrs={'type': 'time', 'step': '60', 'class': 'setting_parameter'})
         }
 
 
 class SendMessageForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(SendMessageForm, self).__init__(*args, **kwargs)
+        self.fields['bot'].empty_label = 'Выберите бота'
+
     class Meta:
         model = MessageToSend
         fields = '__all__'
         date = forms.DateField(input_formats=['%d-%m-%Y'])
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date', 'class': 'edit'}),
-            'time': forms.TimeInput(attrs={'type': 'time', 'step': '60', 'class': 'edit'}),
+            'bot': forms.Select(choices=MessageToSend.objects.all(), attrs={'class': 'message_sending_parameter bot'}),
+            'channel': forms.TextInput(attrs={'class': 'message_sending_parameter channel', 'placeholder': '@channel'}),
+            'date': forms.DateInput(attrs={'type': 'date', 'class': 'message_sending_parameter date'}),
+            'time': forms.TimeInput(attrs={'type': 'time', 'step': '60', 'class': 'message_sending_parameter time'}),
+            'message': forms.Textarea(attrs={'class': 'message_sending_parameter message', 'placeholder': 'Введите сообщение'})
         }
 
     def send_message(self):

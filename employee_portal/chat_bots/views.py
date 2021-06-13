@@ -49,7 +49,7 @@ class AddChatBotPage(CreateView):
     def get_context_data(self, **kwargs):
         context = super(AddChatBotPage, self).get_context_data(**kwargs)
         employee = Employee.objects.filter(user=self.request.user.id).first()
-        context['employee'] = employee
+        context['current_user'] = employee
         return context
 
 
@@ -76,8 +76,8 @@ class UpdateChatBotPage(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(UpdateChatBotPage, self).get_context_data(**kwargs)
-        employee = Employee.objects.filter(user=self.request.user.id).first()
-        context['employee'] = employee
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
         return context
 
 
@@ -108,6 +108,12 @@ class SenderSettingPage(ListView):
 
         return redirect('chatBots:updateSender')
 
+    def get_context_data(self, **kwargs):
+        context = super(SenderSettingPage, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
+
 
 class UpdateOrCreateSenderPage(UpdateView):
     model = Sender
@@ -121,6 +127,12 @@ class UpdateOrCreateSenderPage(UpdateView):
     def form_valid(self, form):
         SenderBots.updateBots()
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateOrCreateSenderPage, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
 
 
 class SendMessageView(FormView):
@@ -136,3 +148,9 @@ class SendMessageView(FormView):
         else:
             form.add_error('date', response['Message'])
             return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(SendMessageView, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context

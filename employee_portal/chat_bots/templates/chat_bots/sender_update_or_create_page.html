@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Изменение настроек отправки уведомлений</title>
-</head>
-<body>
-<header>
-    <p><a href="{% url 'chatBots:senderSetting' %}">Назад</a></p>
-</header>
+{% extends 'base.html' %}
+{% load static %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Сохранить">
-</form>
-</body>
-</html>
+{% block title %}
+    Редактирование настроек отправки уведомлений
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/sender_update_or_create_page_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="edited_sender_settings">
+        <h1> Редактировать настройки отправки уведомлений </h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit"> Сохранить </button>
+        </form>
+    </div>
+{% endblock %}

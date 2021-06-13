@@ -1,9 +1,9 @@
 <div class="left_nav_bar">
     <div class="left_nav_item">
-        <img src="/../media/{{ employee.photo }}" alt="Employee photo">
+        <img src="/../media/{{ current_user.photo }}" alt="User photo">
     </div>
     <div class="left_nav_item">
-        <a class="profile" href="{% url 'employee_information_site:profile' %}">{{ employee.first_name }}</a>
+        <a class="profile" href="{% url 'employee_information_site:profile' %}">{{ current_user.first_name }}</a>
     </div>
     <div class="left_nav_item">
         <img src="/../media/left_nav_bar_image/group.png" alt="Доступ">
@@ -28,6 +28,12 @@
         <a class="left_nav_link" href="{% url 'employeesListInformation' %}">Сотрудники</a>
     </div>
     {% if user.is_superuser %}
+        <div class="left_nav_item">
+            <img src="/../media/left_nav_bar_image/calendar.png" alt="Календарь">
+        </div>
+        <div class="left_nav_item">
+            <a class="left_nav_link" href="{% url 'vacation_schedule:employeeVacationPage' %}">График отпусков сотрудников</a>
+        </div>
         <div class="left_nav_item">
             <img src="/../media/left_nav_bar_image/messages.png" alt="Сообщения">
         </div>

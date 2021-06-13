@@ -1,26 +1,36 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.forms import ModelForm
+
 from .models import Employee, CompanyDepartment, EmployeePosition
 
 
 class ProfileForm(ModelForm):
     phone_regex = RegexValidator(regex=r'^\+79\d{9}$',
                                  message="Phone number must be entered in the format: '+79112223344'")
-    phone_number = forms.CharField(validators=[phone_regex], max_length=12, widget=forms.TextInput(attrs={'class': 'edit'}))
+    phone_number = forms.CharField(label='Телефон', validators=[phone_regex], max_length=12,
+                                   widget=forms.TextInput(attrs={'class': 'num', 'placeholder': '+7 (999) 999-99-99'}))
 
     class Meta:
         model = Employee
-        fields = ['user', 'photo', 'first_name', 'second_name', 'patronymic', 'email', 'phone_number', 'department', 'position', 'description',
+        fields = ['user', 'photo', 'first_name', 'second_name', 'patronymic', 'email', 'phone_number', 'department',
+                  'position', 'description',
                   'is_new_employee']
         widgets = {
             'user': forms.HiddenInput(),
             'photo': forms.ClearableFileInput(attrs={'class': 'edit photo'}),
-            'first_name': forms.TextInput(attrs={'class': 'edit first_name', 'placeholder': 'Введите имя'}),
-            'second_name': forms.TextInput(attrs={'class': 'edit second_name', 'placeholder': 'Введите фамилию'}),
-            'patronymic': forms.TextInput(attrs={'class': 'edit patronymic', 'placeholder': 'Введите отчество'}),
+            'first_name': forms.TextInput(attrs={'class': 'edit first_name name', 'placeholder': 'Введите имя'}),
+            'second_name': forms.TextInput(attrs={'class': 'edit second_name name', 'placeholder': 'Введите фамилию'}),
+            'patronymic': forms.TextInput(attrs={'class': 'edit patronymic name', 'placeholder': 'Введите отчество'}),
             'email': forms.EmailInput(attrs={'class': 'edit email', 'placeholder': 'userr@gmail.com'}),
-            'department': forms.Select(choices=CompanyDepartment.objects.all(), attrs={'class': 'edit department', 'placeholder': 'Выберите отдел'}),
-            'position': forms.Select(choices=EmployeePosition.objects.all(), attrs={'class': 'edit position', 'placeholder': 'Выберите должность'}),
+            'department': forms.Select(choices=CompanyDepartment.objects.all(),
+                                       attrs={'class': 'edit department'}),
+            'position': forms.Select(choices=EmployeePosition.objects.all(),
+                                     attrs={'class': 'edit position'}),
             'description': forms.Textarea(attrs={'class': 'edit description', 'placeholder': 'Напишите что-нибудь о себе'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ProfileForm, self).__init__(*args, **kwargs)
+        self.fields['department'].empty_label = 'Выберите отдел'
+        self.fields['position'].empty_label = 'Выберите должность'

@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404
+import xlwt
+from django.shortcuts import get_object_or_404, HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView, DeleteView
-
+from django.utils.datetime_safe import datetime
+from django.views.generic import DetailView, ListView, UpdateView, DeleteView, TemplateView
 # Create your views here.
 from employee_information_site.models import Employee
 from vacation_schedule.forms import VacationPeriodForm
@@ -16,12 +17,14 @@ class VacationListPage(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         employee = Employee.objects.filter(user=self.request.user.id).first()
+        current_year = datetime.now().year
 
-        return queryset.filter(employeeId=employee.id)
+        return queryset.filter(employeeId=employee.id, startDateVacation__year=current_year)
 
     def get_context_data(self, **kwargs):
         context = super(VacationListPage, self).get_context_data(**kwargs)
         employee = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = employee
         context['days_remainder'] = DaysRemainder.objects.filter(employee=employee).first()
         return context
 
@@ -31,7 +34,7 @@ class UpdateOrCreateVacationPeriod(UpdateView):
     form_class = VacationPeriodForm
     template_name = 'vacation_schedule/add_vacation_page.html'
     success_url = reverse_lazy('vacation_schedule:vacationListPage')
-    context_object_name = 'form'
+    context_object_name = 'vacation_period'
 
     def get_object(self, **kwargs):
         vacation_id = self.kwargs.get('id')
@@ -60,11 +63,7 @@ class UpdateOrCreateVacationPeriod(UpdateView):
         form.instance.employeeId = employee
         form.instance.vacationDays = (form.instance.endDateVacation - form.instance.startDateVacation).days
 
-        if form.instance.vacationDays <= 0:
-            form.add_error('endDateVacation', 'Неправильно выбрана дата окончания отпуска')
-
-        if form.instance.vacationDays > days_remainder.remainder:
-            form.add_error('vacationDays', 'Выбрано больше дней, чем осталось')
+        self.validate_date(form, days_remainder)
 
         if form.is_valid():
             days_remainder.remainder -= form.instance.vacationDays
@@ -72,6 +71,34 @@ class UpdateOrCreateVacationPeriod(UpdateView):
             return super().form_valid(form)
 
         return super().form_invalid(form)
+
+    def validate_date(self, form, days_remainder):
+        if form.instance.vacationDays <= 0:
+            form.add_error('endDateVacation', 'Неправильно выбрана дата окончания отпуска')
+
+        if form.instance.vacationDays > days_remainder.remainder:
+            form.add_error('vacationDays', 'Выбрано больше дней, чем осталось')
+
+        vacation_periods = self.model.objects.filter(employeeId=days_remainder.employee)
+
+        if vacation_periods:
+            if any(x for x in vacation_periods if self.check_date_intersection(form, x)):
+                form.add_error('startDateVacation',
+                               'Период отпуска пересекается с предыдущими периодамами')
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateOrCreateVacationPeriod, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
+
+    @staticmethod
+    def check_date_intersection(form, vacation_period):
+        return form.instance.id != vacation_period.id and (
+                vacation_period.startDateVacation <= form.instance.startDateVacation <= vacation_period.endDateVacation
+                or vacation_period.startDateVacation <= form.instance.endDateVacation <= vacation_period.endDateVacation
+                or form.instance.startDateVacation <= vacation_period.startDateVacation <= form.instance.endDateVacation
+                or form.instance.startDateVacation <= vacation_period.endDateVacation <= form.instance.endDateVacation)
 
 
 class DeleteVacationPeriod(DeleteView):
@@ -97,13 +124,35 @@ class DeleteVacationPeriod(DeleteView):
         return super(DeleteVacationPeriod, self).delete(request, *args, **kwargs)
 
 
-class VacationSchedulePage(ListView):
-    template_name = 'vacation_schedule/vacation_schedule_page.html'
-    model = EmployeeVacationPeriod
-    context_object_name = 'vacation_periods'
+class EmployeeVacationPage(TemplateView):
+    template_name = 'vacation_schedule/employee_vacation_page.html'
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        employee = Employee.objects.filter(user=self.request.user.id).first()
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeVacationPage, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
 
-        return queryset.filter(employeeId=employee.id)
+
+class ExportVacationXlsView(DetailView):
+    def get(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="users.xls"'
+
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Users')
+
+        row_num = 0
+
+        columns = [field.name for field in EmployeeVacationPeriod._meta.get_fields()][1:]
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num])
+
+        rows = EmployeeVacationPeriod.objects.all()
+        for row_object in rows:
+            row_num += 1
+            for col_num, value in enumerate(columns):
+                ws.write(row_num, col_num, str(getattr(row_object, value)))
+
+        wb.save(response)
+        return response

@@ -1,0 +1,52 @@
+.right_content {
+    margin-left: 5%;
+}
+
+h1 {
+    margin-top: 5%;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 61px;
+}
+
+label {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+span, p{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+}
+
+button{
+    cursor: pointer;
+    background-color: #00AA00;
+    border: 2px solid #00AA00;
+    border-radius: 6px;
+    width: 27%;
+    color: white;
+    font-size: 22px;
+    float: left;
+    overflow: hidden;
+    padding: 14px 0;
+}
+
+.setting_parameter:first-child{
+    margin-top: 5%;
+}
+
+.setting_parameter:nth-child(2n+1){
+    margin-bottom: 2%;
+}
+
+.setting_parameter:nth-child(2n){
+    margin-bottom: 5%;
+}
+
+.setting_parameter:nth-child(5){
+    margin-bottom: 5%;
+}
