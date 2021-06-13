@@ -2,11 +2,12 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, RedirectView
+from employee_information_site.serializers import PositionSerializer
 from vacation_schedule.models import DaysRemainder, VacationScheduleParameters
-
 from .forms import ProfileForm
-from .models import Employee, Service, EmployeeServices
+from .models import Employee, Service, EmployeeServices, EmployeePosition
 from chat_bots.sender_bots import SenderBots
+from rest_framework.generics import ListAPIView
 
 
 # Create your views here.
@@ -117,3 +118,11 @@ class EmployeeQuestionnaire(TemplateView):
             return redirect('employee_information_site:profile')
 
         return render(request, self.template_name, {'form': form})
+
+
+class PositionView(ListAPIView):
+    serializer_class = PositionSerializer
+    model = EmployeePosition
+
+    def get_queryset(self):
+        return self.model.objects.filter(department=self.kwargs['department'])
