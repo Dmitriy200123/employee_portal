@@ -1,46 +1,79 @@
+{% extends 'base.html' %}
+
 {% load url_replace %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Список сотрудников</title>
-</head>
-<body>
-<header>
-    <p><a href="{% url 'employee_information_site:home_page' %}">На главную</a></p>
-    <form method="get">
-        <p>
-            <label for="id_full_name">Поиск:</label>
-            <input type="text" name="full_name" maxlength="50" id="id_full_name">
-            {{ form.as_p }}
-            <input type="submit"/>
-        </p>
-    </form>
-</header>
-<h1>Список сотрудников</h1>
-{% for employee in page_obj %}
-    <p>
-        <a href="{% url 'employeeInformation' %}?user={{ employee.user.id }}">{{ employee }}. {{ employee.position }}.</a>
-    </p>
-{% endfor %}
+{% load static %}
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?{% url_replace page=1 %}">&laquo; В начало</a>
-            <a href="?{% url_replace page=page_obj.previous_page_number %}">Назад</a>
+{% block title %}
+    Сотрудники
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/employees_list_page_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="right_content">
+        <h1>Сотрудники</h1>
+        <form class="search_form" method="get">
+            <input class="search_parameter full_name" type="text" name="full_name" maxlength="50"
+                   placeholder="Иванов Иван Иванович">
+            {{ form.department }}
+            {{ form.position }}
+            <button class="search_button" type="submit"></button>
+        </form>
+        {% for employee in page_obj %}
+            <div class="employee_brief_info">
+                <img class="employee_image" src="{{ employee.photo.url }}" alt="avatar">
+                <div>
+                    <a class="employee_link"
+                       href="{% url 'employeeInformation' %}?user={{ employee.user.id }}">{{ employee }}</a>
+                    <p class="brief_info_item">{{ employee.department }}</p>
+                    <p class="brief_info_item">{{ employee.position }}</p>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if page_obj.paginator.num_pages > 1 %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a class="pagination_item left" href="?{% url_replace page=page_obj.previous_page_number %}"><</a>
+                {% endif %}
+
+                <a class="pagination_item {% if page_obj.number == 1 %} active {% endif %}"
+                   href="?{% url_replace page=1 %}">1</a>
+                {% if page_obj.paginator.num_pages <= 3 %}
+                    <a class="pagination_item {% if page_obj.number == 2 %} active {% endif %}"
+                       href="?{% url_replace page=2 %}">2</a>
+                    {% if page_obj.paginator.num_pages == 3 %}
+                        <a class="pagination_item {% if page_obj.number == 3 %} active {% endif %}"
+                           href="?{% url_replace page=3 %}">3</a>
+                    {% endif %}
+                {% else %}
+                    {% if page_obj.number <= 2 %}
+                        <a class="pagination_item {% if page_obj.number == 2 %} active {% endif %}"
+                           href="?{% url_replace page=2 %}">2</a>
+                    {% endif %}
+
+                    {% if page_obj.number == page_obj.paginator.num_pages %}
+                        <a class="pagination_item" href="?{% url_replace page=page_obj.previous_page_number %}">...</a>
+                    {% else %}
+                        <a class="pagination_item" href="?{% url_replace page=page_obj.next_page_number %}">...</a>
+                    {% endif %}
+
+                    <a class="pagination_item {% if page_obj.number == page_obj.paginator.num_pages|add:'-1' %} active {% endif %}"
+                       href="?{% url_replace page=page_obj.paginator.num_pages|add:'-1' %}">{{ page_obj.paginator.num_pages|add:'-1' }}</a>
+                    <a class="pagination_item {% if not page_obj.has_next %} active {% endif %}"
+                       href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a class="pagination_item right" href="?{% url_replace page=page_obj.next_page_number %}">></a>
+                {% endif %}
+            </div>
         {% endif %}
-
-        <span class="current">
-            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?{% url_replace page=page_obj.next_page_number %}">Вперед</a>
-            <a href="?{% url_replace page=page_obj.paginator.num_pages %}">В конец &raquo;</a>
-        {% endif %}
-
-    </span>
-</div>
-</body>
-</html>
+    </div>
+{% endblock %}
