@@ -66,7 +66,7 @@ class ProfileEditPageView(TemplateView):
         else:
             form = ProfileForm()
 
-        context = {'form': form}
+        context = {'form': form, 'current_user': employee.first()}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):

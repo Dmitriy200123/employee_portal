@@ -18,7 +18,7 @@ class ProfileForm(ModelForm):
                   'is_new_employee']
         widgets = {
             'user': forms.HiddenInput(),
-            'photo': forms.ClearableFileInput(attrs={'class': 'photo'}),
+            'photo': forms.FileInput(attrs={'class': 'photo'}),
             'first_name': forms.TextInput(attrs={'class': 'name', 'placeholder': 'Введите имя'}),
             'second_name': forms.TextInput(attrs={'class': 'name', 'placeholder': 'Введите фамилию'}),
             'patronymic': forms.TextInput(attrs={'class': 'name', 'placeholder': 'Введите отчество'}),
