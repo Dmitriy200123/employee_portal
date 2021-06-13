@@ -1,25 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Services </title>
-</head>
-<body>
-<p>
-    Service list
-</p>
-<form method="post">
-    {% csrf_token %}
-    <ul>
-        {% for object in object_list %}
-        <li>
-            {{object.name}}
-            <input type="checkbox" name="serviceCheck" value="{{object.name}}">
-        </li>
-        {%endfor%}
-    </ul>
-    <input type="submit" value="Запросить доступ">
-</form>
-<p>{{text}}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Доступ к сервисам
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/service.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/employee_information_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+{% block right_content %}
+    <div>
+    <h1>Доступ к сервисам</h1>
+    <div class="container">
+    #сюда фотки, класс container позволит Им расположиться нормально на странице. Лежат фото в media, servis_list_photo
+        <form method="post">
+            {% csrf_token %}
+            <ul>
+                {% for object in object_list %}
+                    <li>
+                        {{ object.name }}
+                        <input type="checkbox" name="serviceCheck" value="{{ object.name }}">
+                    </li>
+                {% endfor %}
+            </ul>
+            <button class="button_css"> Запросить доступ</button>
+        </form>
+    </div>
+
+        <p>{{ text }}</p>
+
+    </div>
+{% endblock %}
