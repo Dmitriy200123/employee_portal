@@ -4,13 +4,18 @@ getPosition()
 
 
 function getPosition() {
-    let selectedValue = selectDepartment.options[selectDepartment.selectedIndex].value;
+    let selectedValue = selectDepartment.value
     responsePositions(selectedValue).then(data => {
         let selectPosition = document.querySelector('.form_position .position')
+        selectPosition.containsOption = containsOption
+        let positionValue = selectPosition.value
+
         removeOptions(selectPosition)
 
-        if (data != null)
+        if (data != null) {
             addPositions(selectPosition, data)
+            selectOption(selectPosition, positionValue)
+        }
     })
 }
 
@@ -28,25 +33,40 @@ function responsePositions(value) {
 }
 
 function addPositions(selectPosition, positions) {
-    selectPosition.appendChild(createOption({'id': null, 'name': 'Выберите должность'}))
+    let defaultOption = {'id': '', 'name': 'Выберите должность'}
+    selectPosition.appendChild(createOption(defaultOption))
 
     for (let position of positions) {
-        selectPosition.appendChild(createOption(position));
+        selectPosition.appendChild(createOption(position))
     }
 }
 
-function createOption(position) {
-    let option = document.createElement('option');
-    option.innerHTML = position['name'];
+function selectOption(selectPosition, positionValue) {
+    if (selectPosition.containsOption(positionValue))
+        selectPosition.value = positionValue
+    else
+        selectPosition.value = ''
+}
 
-    if (position['id'] != null)
-        option.value = position['id'];
+function containsOption(value) {
+    for (let i = 0, l = this.options.length; i < l; i++) {
+        if (this.options[i].value === value)
+            return true
+    }
+
+    return false
+}
+
+function createOption(position) {
+    let option = document.createElement('option')
+    option.innerHTML = position['name']
+    option.value = position['id']
 
     return option
 }
 
 function removeOptions(selectElement) {
     for (let i = selectElement.options.length - 1; i >= 0; i--) {
-        selectElement.remove(i);
+        selectElement.remove(i)
     }
 }
