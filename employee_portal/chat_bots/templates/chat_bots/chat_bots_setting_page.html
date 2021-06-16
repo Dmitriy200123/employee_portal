@@ -28,7 +28,7 @@
                     {% elif chatBot.botType.messenger_type == "slack" %}
                         <p>
                             <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
-                                    src="/../../media/chat_bot/new_vk.png">{{ chatBot.name }}</a>
+                                    src="/../../media/chat_bot/slack.png">{{ chatBot.name }}</a>
                         </p>
                     {% endif %}
                 {% endfor %}
