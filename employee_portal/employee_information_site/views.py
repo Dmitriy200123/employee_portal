@@ -51,7 +51,7 @@ class ServiceListView(ListView):
         for serv in services:
             service = Service.objects.filter(name=serv).first()
             EmployeeServices.objects.update_or_create(employee=user.first(), service=service)
-        return render(request, self.template_name, {'text': 'Запрос на доступ отправлен'})
+        return render(request, self.template_name, {'text': 'Запрос на доступ отправлен', 'current_user': user.first})
 
     def get_context_data(self, **kwargs):
         context = super(ServiceListView, self).get_context_data(**kwargs)

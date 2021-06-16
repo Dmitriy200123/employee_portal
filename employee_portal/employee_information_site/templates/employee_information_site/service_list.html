@@ -16,6 +16,7 @@
 {% block right_content %}
     <div class="right_content">
         <h1>Доступ к сервисам</h1>
+        <p class="message">{{ text }}</p>
         <form method="post">
             {% csrf_token %}
             <div class="services">
@@ -38,7 +39,5 @@
             </div>
             <button class="button_css"> Запросить доступ</button>
         </form>
-    </div>
-    <p class="message">{{ text }}</p>
     </div>
 {% endblock %}
