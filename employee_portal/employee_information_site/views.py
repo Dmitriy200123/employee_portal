@@ -51,7 +51,13 @@ class ServiceListView(ListView):
         for serv in services:
             service = Service.objects.filter(name=serv).first()
             EmployeeServices.objects.update_or_create(employee=user.first(), service=service)
-        return render(request, self.template_name, {'text': 'Ok'})
+        return render(request, self.template_name, {'text': 'Запрос на доступ отправлен'})
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceListView, self).get_context_data(**kwargs)
+        employee = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = employee
+        return context
 
 
 class ProfileEditPageView(TemplateView):
