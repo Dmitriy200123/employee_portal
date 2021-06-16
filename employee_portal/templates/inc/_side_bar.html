@@ -15,12 +15,14 @@
             <a class="left_nav_link" href="{% url 'employee_information_site:service_list' %}">Доступ к сервисам</a>
         {% endif %}
     </div>
-    <div class="left_nav_item">
-        <img src="/../media/left_nav_bar_image/calendar.png" alt="Календарь">
-    </div>
-    <div class="left_nav_item">
-        <a class="left_nav_link" href="{% url 'vacation_schedule:vacationListPage' %}">График отпусков</a>
-    </div>
+    {% if not user.is_superuser %}
+        <div class="left_nav_item">
+            <img src="/../media/left_nav_bar_image/calendar.png" alt="Календарь">
+        </div>
+        <div class="left_nav_item">
+            <a class="left_nav_link" href="{% url 'vacation_schedule:vacationListPage' %}">График отпусков</a>
+        </div>
+    {% endif %}
     <div class="left_nav_item">
         <img src="/../media/left_nav_bar_image/user.png" alt="Пользователь">
     </div>
@@ -29,10 +31,11 @@
     </div>
     {% if user.is_superuser %}
         <div class="left_nav_item">
-            <img src="/../media/left_nav_bar_image/calendar.png" alt="Календарь">
+            <img src="/../media/left_nav_bar_image/export.png" alt="экспорт">
         </div>
         <div class="left_nav_item">
-            <a class="left_nav_link" href="{% url 'vacation_schedule:employeeVacationPage' %}">График отпусков сотрудников</a>
+            <a class="left_nav_link" href="{% url 'vacation_schedule:employeeVacationPage' %}">Выгрузка периодов
+                отпуска</a>
         </div>
         <div class="left_nav_item">
             <img src="/../media/left_nav_bar_image/messages.png" alt="Сообщения">
@@ -48,7 +51,7 @@
             <a class="left_nav_link" href="{% url 'chatBots:senderSetting' %}">Настройка отправки уведомлений</a>
         </div>
         <div class="left_nav_item">
-            <img src="/../media/left_nav_bar_image/messages.png" alt="Сообщения">
+            <img src="/../media/left_nav_bar_image/email.png" alt="Сообщения">
         </div>
         <div class="left_nav_item">
             <a class="left_nav_link" href="{% url 'chatBots:sendMessage' %}">Отправить сообщение</a>
