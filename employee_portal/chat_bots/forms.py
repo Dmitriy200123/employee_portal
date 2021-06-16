@@ -62,9 +62,9 @@ class SendMessageForm(forms.ModelForm):
         bot = SenderBots.createBot(data['bot'])
         time = datetime.datetime.combine(data['date'], data['time'])
         if datetime.datetime.now() > time + datetime.timedelta(minutes=1):
-            return {'Result': 'Bad', 'Message': 'Time in past'}
+            return {'Result': 'Bad', 'Message': 'Время в прошлом'}
         if datetime.datetime.now() < time:
             bot.post_scheduled_message(date=time, channel_id=data['channel'], message=data['message'])
         else:
             bot.post_message(channel_id=data['channel'], message=data['message'])
-        return {'Result': 'Ok', 'Message': 'Ok'}
+        return {'Result': 'Ok', 'Message': 'Сообщение отправлено'}

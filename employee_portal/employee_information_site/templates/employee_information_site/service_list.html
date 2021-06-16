@@ -1,25 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Services </title>
-</head>
-<body>
-<p>
-    Service list
-</p>
-<form method="post">
-    {% csrf_token %}
-    <ul>
-        {% for object in object_list %}
-        <li>
-            {{object.name}}
-            <input type="checkbox" name="serviceCheck" value="{{object.name}}">
-        </li>
-        {%endfor%}
-    </ul>
-    <input type="submit" value="Запросить доступ">
-</form>
-<p>{{text}}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Доступ к сервисам
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/service.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+{% block right_content %}
+    <div class="right_content">
+        <h1>Доступ к сервисам</h1>
+        <p class="message">{{ text }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="services">
+                {% for object in object_list %}
+                    <div class="service">
+                        <input class="checkbox" type="checkbox" name="serviceCheck" value="{{ object.name }}">
+                        <div class="service_info">
+                            {% if object.name == 'You track' %}
+                                <img class="service_img" src="{% static 'service_list_photo\yt.png' %}" alt="service">
+                            {% else %}
+                                <img class="service_img" src="{% static 'service_list_photo\git.png' %}" alt="service">
+                            {% endif %}
+                        </div>
+                        <div class="no_active">
+                            <img src="{% static 'service_list_photo\checked.png' %}" alt="service">
+                        </div>
+                        <div class="service_name">{{ object.name }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="button_css"> Запросить доступ</button>
+        </form>
+    </div>
+{% endblock %}

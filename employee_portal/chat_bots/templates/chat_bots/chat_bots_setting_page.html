@@ -20,12 +20,12 @@
         <div class="container">
             {% if object_list %}
                 {% for chatBot in object_list %}
-                    {% if chatBot.botType.messenger_type == "telegram" %}
+                    {% if chatBot.botType.messenger_type == "Telegram" %}
                         <p>
                             <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
                                     src="/../../media/chat_bot/new_tg.png">{{ chatBot.name }}</a>
                         </p>
-                    {% elif chatBot.botType.messenger_type == "slack" %}
+                    {% elif chatBot.botType.messenger_type == "Slack" %}
                         <p>
                             <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
                                     src="/../../media/chat_bot/slack.png">{{ chatBot.name }}</a>
