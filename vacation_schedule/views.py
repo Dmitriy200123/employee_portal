@@ -144,15 +144,15 @@ class ExportVacationXlsView(DetailView):
 
         row_num = 0
 
-        columns = [field.name for field in EmployeeVacationPeriod._meta.get_fields()][1:]
+        columns = [field for field in EmployeeVacationPeriod._meta.get_fields()][1:]
         for col_num in range(len(columns)):
-            ws.write(row_num, col_num, columns[col_num])
+            ws.write(row_num, col_num, columns[col_num].verbose_name)
 
         rows = EmployeeVacationPeriod.objects.all()
         for row_object in rows:
             row_num += 1
             for col_num, value in enumerate(columns):
-                ws.write(row_num, col_num, str(getattr(row_object, value)))
+                ws.write(row_num, col_num, str(getattr(row_object, value.name)))
 
         wb.save(response)
         return response

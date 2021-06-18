@@ -50,7 +50,7 @@ class Employee(PersonBase):
         ordering = ['department', 'position', 'first_name', 'second_name', 'patronymic']
 
     def __str__(self):
-        return f'{self.first_name} {self.second_name} {self.patronymic}'
+        return f'{self.second_name} {self.first_name} {self.patronymic}'
 
 
 class CandidateProspectivePosition(models.Model):

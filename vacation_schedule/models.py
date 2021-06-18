@@ -15,10 +15,10 @@ class VacationScheduleParameters(models.Model):
 
 
 class EmployeeVacationPeriod(models.Model):
-    employeeId = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name='Id сотрудника')
+    employeeId = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name='Сотрудник')
     startDateVacation = models.DateField(verbose_name='Дата начала отпуска')
     endDateVacation = models.DateField(verbose_name='Дата окончания отпуска')
-    vacationDays = models.IntegerField(verbose_name='Продолжительность отпуска')
+    vacationDays = models.IntegerField(verbose_name='Продолжительность отпуска (дней)')
 
     def __str__(self):
         return f'{self.employeeId}: {self.startDateVacation} - {self.endDateVacation}'
