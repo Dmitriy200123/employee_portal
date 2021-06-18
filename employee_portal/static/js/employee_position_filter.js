@@ -1,4 +1,4 @@
-let selectDepartment = document.querySelector('.form_department .department')
+let selectDepartment = document.querySelector('#id_department')
 selectDepartment.addEventListener('change', getPosition)
 getPosition()
 
@@ -6,7 +6,7 @@ getPosition()
 function getPosition() {
     let selectedValue = selectDepartment.value
     responsePositions(selectedValue).then(data => {
-        let selectPosition = document.querySelector('.form_position .position')
+        let selectPosition = document.querySelector('#id_position')
         selectPosition.containsOption = containsOption
         let positionValue = selectPosition.value
 
