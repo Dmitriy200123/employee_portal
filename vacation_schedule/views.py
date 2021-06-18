@@ -24,6 +24,7 @@ class VacationListPage(ListView):
     def get_context_data(self, **kwargs):
         context = super(VacationListPage, self).get_context_data(**kwargs)
         employee = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = employee
         context['days_remainder'] = DaysRemainder.objects.filter(employee=employee).first()
         return context
 
@@ -33,7 +34,7 @@ class UpdateOrCreateVacationPeriod(UpdateView):
     form_class = VacationPeriodForm
     template_name = 'vacation_schedule/add_vacation_page.html'
     success_url = reverse_lazy('vacation_schedule:vacationListPage')
-    context_object_name = 'form'
+    context_object_name = 'vacation_period'
 
     def get_object(self, **kwargs):
         vacation_id = self.kwargs.get('id')
@@ -85,6 +86,12 @@ class UpdateOrCreateVacationPeriod(UpdateView):
                 form.add_error('startDateVacation',
                                'Период отпуска пересекается с предыдущими периодамами')
 
+    def get_context_data(self, **kwargs):
+        context = super(UpdateOrCreateVacationPeriod, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
+
     @staticmethod
     def check_date_intersection(form, vacation_period):
         return form.instance.id != vacation_period.id and (
@@ -119,6 +126,12 @@ class DeleteVacationPeriod(DeleteView):
 
 class EmployeeVacationPage(TemplateView):
     template_name = 'vacation_schedule/employee_vacation_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeVacationPage, self).get_context_data(**kwargs)
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
 
 
 class ExportVacationXlsView(DetailView):

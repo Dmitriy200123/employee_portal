@@ -20,11 +20,13 @@
 
 {% block right_content %}
     <div class="edit_chat_bot">
-    {% if chatBot %}
-        <h1> Редактировать бота </h1>
-    {% else %}
-        <h1> Добавить бота </h1>
-    {% endif %}
+        <h1>
+            {% if chatBot %}
+                Редактировать бота
+            {% else %}
+                Добавить бота
+            {% endif %}
+        </h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}

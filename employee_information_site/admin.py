@@ -26,3 +26,6 @@ admin.site.register(Candidate, CandidateList)
 
 admin.site.register(Service)
 admin.site.register(EmployeeServices)
+
+admin.site.site_title = 'Корпоративный портал SKB-LAB'
+admin.site.site_header = 'Корпоративный портал SKB-LAB'

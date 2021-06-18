@@ -1,0 +1,66 @@
+.right_content {
+    margin-left: 5%;
+}
+
+h1 {
+    margin-top: 5%;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 61px;
+}
+
+.vacation_add_grid {
+    display: grid;
+    column-gap: 10%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.vacation_period_info {
+    margin-top: 3%;
+}
+
+.period, .days_remainder {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+.days_remainder {
+    display: inline-block;
+    margin-bottom: 3%;
+    margin-left: 15%;
+}
+
+.days_remainder > span {
+    color: #FF4500;
+}
+
+.vacation_days {
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+.period > a:hover {
+    color: #FF4500;
+}
+
+.button_form {
+    width: 40%;
+}
+
+.add_new_period {
+    width: 100%;
+    background-color: white;
+    padding: 14px 20px;
+    text-align: center;
+    color: #00AA00;
+    border: 2px solid #00AA00;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+    overflow: hidden;
+    cursor: pointer;
+}

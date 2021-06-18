@@ -1,25 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Настройка чат-ботов</title>
-</head>
-<body>
-<header>
-    <p><a href="{% url 'employee_information_site:home_page' %}">На главную</a></p>
-    <p><a href="{% url 'chatBots:addChatBots' %}">Добавить чат-бота</a></p>
-</header>
-<h1>Настройка чат-ботов</h1>
+{% extends 'base.html' %}
 
-{% if object_list %}
-    {% for chatBot in object_list %}
-        <p>
-            <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}">{{ chatBot.botType }}: {{ chatBot.name }}</a>
-        </p>
-    {% endfor %}
-{% else %}
-    <p>Добавьте чат-бота</p>
-{% endif %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+    Настройка чат-ботов
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/chat_bots_setting_page_moe.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div>
+        <h1>Настройка чат-ботов</h1>
+        <div class="container">
+            {% if object_list %}
+                {% for chatBot in object_list %}
+                    {% if chatBot.botType.messenger_type == "Telegram" %}
+                        <p>
+                            <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
+                                    src="/../../media/chat_bot/new_tg.png">{{ chatBot.name }}</a>
+                        </p>
+                    {% elif chatBot.botType.messenger_type == "Slack" %}
+                        <p>
+                            <a href="{% url 'chatBots:updateChatBot' %}?id={{ chatBot.id }}"> <img
+                                    src="/../../media/chat_bot/slack.png">{{ chatBot.name }}</a>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <p><a href="{% url 'chatBots:addChatBots' %}"> <img src="/../../media/chat_bot/new_plus.png">Добавить
+                чат-бота</a></p>
+        </div>
+
+    </div>
+
+{% endblock %}

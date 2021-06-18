@@ -1,11 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-123321
-<a href="{% url 'vacation_schedule:download' %}">Export all users</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Периоды отпуска сотрудников
+{% endblock %}
+
+{% block load_styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/employee_vacation_page.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="right_content">
+        <h1>
+            Периоды отпуска сотрудников
+        </h1>
+        <div class="vacation_schedule">
+            <img src="{% static 'vacation_schedule_images/schedule.png' %}" alt="schedule image">
+            <form class="button_form" action="{% url 'vacation_schedule:download' %}">
+                <button type="submit" class="export_button">Скачать всё</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

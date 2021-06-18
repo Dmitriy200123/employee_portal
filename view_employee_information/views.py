@@ -24,6 +24,8 @@ class EmployeesListPage(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = FilterForm
+        current_user = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = current_user
         return context
 
     @staticmethod

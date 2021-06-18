@@ -2,11 +2,12 @@ from django import forms
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, RedirectView
+from employee_information_site.serializers import PositionSerializer
 from vacation_schedule.models import DaysRemainder, VacationScheduleParameters
-
 from .forms import ProfileForm
-from .models import Employee, Service, EmployeeServices
+from .models import Employee, Service, EmployeeServices, EmployeePosition
 from chat_bots.sender_bots import SenderBots
+from rest_framework.generics import ListAPIView
 
 
 # Create your views here.
@@ -51,7 +52,13 @@ class ServiceListView(ListView):
         for serv in services:
             service = Service.objects.filter(name=serv).first()
             EmployeeServices.objects.update_or_create(employee=user.first(), service=service)
-        return render(request, self.template_name, {'text': 'Ok'})
+        return render(request, self.template_name, {'text': 'Запрос на доступ отправлен', 'current_user': user.first})
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceListView, self).get_context_data(**kwargs)
+        employee = Employee.objects.filter(user=self.request.user.id).first()
+        context['current_user'] = employee
+        return context
 
 
 class ProfileEditPageView(TemplateView):
@@ -66,7 +73,7 @@ class ProfileEditPageView(TemplateView):
         else:
             form = ProfileForm()
 
-        context = {'form': form}
+        context = {'form': form, 'current_user': employee.first()}
         return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
@@ -117,3 +124,11 @@ class EmployeeQuestionnaire(TemplateView):
             return redirect('employee_information_site:profile')
 
         return render(request, self.template_name, {'form': form})
+
+
+class PositionView(ListAPIView):
+    serializer_class = PositionSerializer
+    model = EmployeePosition
+
+    def get_queryset(self):
+        return self.model.objects.filter(department=self.kwargs['department'])

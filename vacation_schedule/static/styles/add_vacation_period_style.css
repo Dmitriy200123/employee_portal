@@ -1,0 +1,74 @@
+h1 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 50px;
+    line-height: 61px;
+}
+
+
+.right_content {
+    margin-left: 5%;
+    margin-top: 3.5%;
+}
+
+form {
+    margin-top: 5%;
+}
+
+.vacation_date {
+    display: block;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 2px solid #CFCFCF;
+    border-radius: 6px;
+    width: 60%;
+    padding: 10px 20px;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    font-weight: normal;
+    font-size: 22px;
+}
+
+.vacation_date:hover {
+    border-color: #00AA00;
+}
+
+label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+}
+
+button {
+    cursor: pointer;
+    overflow: hidden;
+    padding: 14px 0;
+}
+
+.save_button {
+    background-color: #00AA00;
+    border: 2px solid #00AA00;
+    border-radius: 6px;
+    width: 27%;
+    color: white;
+    font-size: 22px;
+    float: left;
+}
+
+.delete_button {
+    width: 17%;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 27px;
+    color: #FF1F01;
+    border: 2px solid #FF1F01;
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    margin-left: 16%;
+    position: relative;
+    bottom: 43px;
+    float: left;
+}
+
+

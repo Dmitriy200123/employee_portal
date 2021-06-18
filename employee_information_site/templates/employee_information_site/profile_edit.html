@@ -1,47 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit profile</title>
+{% extends 'base.html' %}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid justify-content-start">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"
-                       href="{% url 'employee_information_site:home_page' %}">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"
-                       href="{% url 'authentication:logout' %}">Выйти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'employee_information_site:profile' %}">Профиль</a>
-                </li>
-            </ul>
-        </div>
+{% load static %}
+
+{% block title %}
+    Редактировать профиль
+{% endblock %}
+
+{% block load_styles %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/font.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/side_bar_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/header_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile_edit_style.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="right_content">
+        <h1>Редактировать профиль</h1>
+        {{ form.errors }}
+        <form class="profile_edit_form" method="post" enctype="multipart/form-data" id="employee">
+            {% csrf_token %}
+            <div class="profile_photo">
+                <img src="{{ current_user.photo.url }}" alt="profile" class="photo_round">
+                <div class="button_download">
+                    {{ form.photo }}
+                    <button disabled>Загрузить</button>
+                </div>
+            </div>
+
+            <div class="form_fname">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </div>
+
+            <div class="form_sname">
+                {{ form.second_name.label_tag }}
+                {{ form.second_name }}
+            </div>
+
+            <div class="form_patronymic">
+                {{ form.patronymic.label_tag }} <span>(если есть)</span>
+                {{ form.patronymic }}
+            </div>
+
+            <div class="form_email">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+
+            <div class="form_number">
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
+            </div>
+
+            <div class="form_department">
+                {{ form.department.label_tag }}
+                {{ form.department }}
+            </div>
+
+            <div class="form_position">
+                {{ form.position.label_tag }}
+                {{ form.position }}
+            </div>
+
+            <div class="form_description">
+                {{ form.description.label_tag }} <span>(необязательно)</span>
+                <p>Владение языками, личные качества, навыки, достижения</p>
+                {{ form.description }}
+            </div>
+
+            <button type="submit" class="button_save">Сохранить</button>
+        </form>
     </div>
-</nav>
-<h1>Edit profile</h1>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Save</button>
-</form>
-
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

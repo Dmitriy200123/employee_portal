@@ -19,6 +19,7 @@
         <h1>
             Отправить сообщение
         </h1>
+        {{ form.errors }}
         <form method="post" class="message_sending_form">
             {% csrf_token %}
             <div class="bot_info">
@@ -47,6 +48,5 @@
             </div>
             <button class="sending_button" type="submit"> Отправить</button>
         </form>
-        <p>{{ error }}</p>
     </div>
 {% endblock %}
