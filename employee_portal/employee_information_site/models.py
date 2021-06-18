@@ -59,16 +59,21 @@ class CandidateProspectivePosition(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'должность'
+        verbose_name_plural = 'Вакантные должности'
+
 
 class Candidate(PersonBase):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    position = models.ForeignKey(CandidateProspectivePosition, null=True, on_delete=models.SET_NULL)
-    personal_qualities = models.TextField(blank=True)
-    professional_skill = models.TextField(blank=True)
-    professional_achievements = models.TextField(blank=True)
+    position = models.ForeignKey(CandidateProspectivePosition, null=True, on_delete=models.SET_NULL, verbose_name='Предполагаемая должность')
+    personal_qualities = models.TextField(blank=True, verbose_name='Личные качества')
+    professional_skill = models.TextField(blank=True, verbose_name='Профессиональные навыки')
+    professional_achievements = models.TextField(blank=True, verbose_name='Профессиональные достижения')
 
     class Meta:
         ordering = ['created_at', 'position', 'first_name', 'second_name', 'patronymic']
+        verbose_name = 'кандидата'
+        verbose_name_plural = 'Кандидат'
 
     def __str__(self):
         return f'{self.first_name} {self.second_name} {self.patronymic}'
